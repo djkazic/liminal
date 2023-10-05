@@ -1,0 +1,11 @@
+<resources>
+    <color name="blue">#00C4D1</color>
+    <color name="colorPrimary">#FF5733</color>  
+    <color name="colorPrimaryDark">#FF9933</color>
+    <color name="splashscreen_background">#FFFFFF</color>
+    <color name="iconBackground">#000000</color>
+
+    <integer-array name="androidcolors">
+        <item>@color/blue</item>
+    </integer-array>
+</resources>
