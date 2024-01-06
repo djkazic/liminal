@@ -1003,7 +1003,7 @@ public final class RouterOuterClass {
      *
      * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
      */
-    java.util.List<lnrpc.LightningOuterClass.RouteHint> 
+    java.util.List<lnrpc.Lnd.RouteHint> 
         getRouteHintsList();
     /**
      * <pre>
@@ -1013,7 +1013,7 @@ public final class RouterOuterClass {
      *
      * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
      */
-    lnrpc.LightningOuterClass.RouteHint getRouteHints(int index);
+    lnrpc.Lnd.RouteHint getRouteHints(int index);
     /**
      * <pre>
      *
@@ -1031,7 +1031,7 @@ public final class RouterOuterClass {
      *
      * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
      */
-    java.util.List<? extends lnrpc.LightningOuterClass.RouteHintOrBuilder> 
+    java.util.List<? extends lnrpc.Lnd.RouteHintOrBuilder> 
         getRouteHintsOrBuilderList();
     /**
      * <pre>
@@ -1041,7 +1041,7 @@ public final class RouterOuterClass {
      *
      * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
      */
-    lnrpc.LightningOuterClass.RouteHintOrBuilder getRouteHintsOrBuilder(
+    lnrpc.Lnd.RouteHintOrBuilder getRouteHintsOrBuilder(
         int index);
 
     /**
@@ -1146,7 +1146,7 @@ com.google.protobuf.ByteString defaultValue);
      * <code>repeated .lnrpc.FeatureBit dest_features = 16;</code>
      * @return A list containing the destFeatures.
      */
-    java.util.List<lnrpc.LightningOuterClass.FeatureBit> getDestFeaturesList();
+    java.util.List<lnrpc.Lnd.FeatureBit> getDestFeaturesList();
     /**
      * <pre>
      *
@@ -1175,7 +1175,7 @@ com.google.protobuf.ByteString defaultValue);
      * @param index The index of the element to return.
      * @return The destFeatures at the given index.
      */
-    lnrpc.LightningOuterClass.FeatureBit getDestFeatures(int index);
+    lnrpc.Lnd.FeatureBit getDestFeatures(int index);
     /**
      * <pre>
      *
@@ -1644,7 +1644,7 @@ com.google.protobuf.ByteString defaultValue);
 
     public static final int ROUTE_HINTS_FIELD_NUMBER = 10;
     @SuppressWarnings("serial")
-    private java.util.List<lnrpc.LightningOuterClass.RouteHint> routeHints_;
+    private java.util.List<lnrpc.Lnd.RouteHint> routeHints_;
     /**
      * <pre>
      *
@@ -1654,7 +1654,7 @@ com.google.protobuf.ByteString defaultValue);
      * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
      */
     @java.lang.Override
-    public java.util.List<lnrpc.LightningOuterClass.RouteHint> getRouteHintsList() {
+    public java.util.List<lnrpc.Lnd.RouteHint> getRouteHintsList() {
       return routeHints_;
     }
     /**
@@ -1666,7 +1666,7 @@ com.google.protobuf.ByteString defaultValue);
      * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
      */
     @java.lang.Override
-    public java.util.List<? extends lnrpc.LightningOuterClass.RouteHintOrBuilder> 
+    public java.util.List<? extends lnrpc.Lnd.RouteHintOrBuilder> 
         getRouteHintsOrBuilderList() {
       return routeHints_;
     }
@@ -1691,7 +1691,7 @@ com.google.protobuf.ByteString defaultValue);
      * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.RouteHint getRouteHints(int index) {
+    public lnrpc.Lnd.RouteHint getRouteHints(int index) {
       return routeHints_.get(index);
     }
     /**
@@ -1703,7 +1703,7 @@ com.google.protobuf.ByteString defaultValue);
      * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.RouteHintOrBuilder getRouteHintsOrBuilder(
+    public lnrpc.Lnd.RouteHintOrBuilder getRouteHintsOrBuilder(
         int index) {
       return routeHints_.get(index);
     }
@@ -1842,12 +1842,12 @@ com.google.protobuf.ByteString defaultValue) {
     @SuppressWarnings("serial")
     private java.util.List<java.lang.Integer> destFeatures_;
     private static final com.google.protobuf.Internal.ListAdapter.Converter<
-        java.lang.Integer, lnrpc.LightningOuterClass.FeatureBit> destFeatures_converter_ =
+        java.lang.Integer, lnrpc.Lnd.FeatureBit> destFeatures_converter_ =
             new com.google.protobuf.Internal.ListAdapter.Converter<
-                java.lang.Integer, lnrpc.LightningOuterClass.FeatureBit>() {
-              public lnrpc.LightningOuterClass.FeatureBit convert(java.lang.Integer from) {
-                lnrpc.LightningOuterClass.FeatureBit result = lnrpc.LightningOuterClass.FeatureBit.forNumber(from);
-                return result == null ? lnrpc.LightningOuterClass.FeatureBit.UNRECOGNIZED : result;
+                java.lang.Integer, lnrpc.Lnd.FeatureBit>() {
+              public lnrpc.Lnd.FeatureBit convert(java.lang.Integer from) {
+                lnrpc.Lnd.FeatureBit result = lnrpc.Lnd.FeatureBit.forNumber(from);
+                return result == null ? lnrpc.Lnd.FeatureBit.UNRECOGNIZED : result;
               }
             };
     /**
@@ -1864,9 +1864,9 @@ com.google.protobuf.ByteString defaultValue) {
      * @return A list containing the destFeatures.
      */
     @java.lang.Override
-    public java.util.List<lnrpc.LightningOuterClass.FeatureBit> getDestFeaturesList() {
+    public java.util.List<lnrpc.Lnd.FeatureBit> getDestFeaturesList() {
       return new com.google.protobuf.Internal.ListAdapter<
-          java.lang.Integer, lnrpc.LightningOuterClass.FeatureBit>(destFeatures_, destFeatures_converter_);
+          java.lang.Integer, lnrpc.Lnd.FeatureBit>(destFeatures_, destFeatures_converter_);
     }
     /**
      * <pre>
@@ -1900,7 +1900,7 @@ com.google.protobuf.ByteString defaultValue) {
      * @return The destFeatures at the given index.
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.FeatureBit getDestFeatures(int index) {
+    public lnrpc.Lnd.FeatureBit getDestFeatures(int index) {
       return destFeatures_converter_.convert(destFeatures_.get(index));
     }
     /**
@@ -2908,9 +2908,9 @@ com.google.protobuf.ByteString defaultValue) {
                 break;
               } // case 72
               case 82: {
-                lnrpc.LightningOuterClass.RouteHint m =
+                lnrpc.Lnd.RouteHint m =
                     input.readMessage(
-                        lnrpc.LightningOuterClass.RouteHint.parser(),
+                        lnrpc.Lnd.RouteHint.parser(),
                         extensionRegistry);
                 if (routeHintsBuilder_ == null) {
                   ensureRouteHintsIsMutable();
@@ -3902,17 +3902,17 @@ com.google.protobuf.ByteString defaultValue) {
         return this;
       }
 
-      private java.util.List<lnrpc.LightningOuterClass.RouteHint> routeHints_ =
+      private java.util.List<lnrpc.Lnd.RouteHint> routeHints_ =
         java.util.Collections.emptyList();
       private void ensureRouteHintsIsMutable() {
         if (!((bitField0_ & 0x00004000) != 0)) {
-          routeHints_ = new java.util.ArrayList<lnrpc.LightningOuterClass.RouteHint>(routeHints_);
+          routeHints_ = new java.util.ArrayList<lnrpc.Lnd.RouteHint>(routeHints_);
           bitField0_ |= 0x00004000;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          lnrpc.LightningOuterClass.RouteHint, lnrpc.LightningOuterClass.RouteHint.Builder, lnrpc.LightningOuterClass.RouteHintOrBuilder> routeHintsBuilder_;
+          lnrpc.Lnd.RouteHint, lnrpc.Lnd.RouteHint.Builder, lnrpc.Lnd.RouteHintOrBuilder> routeHintsBuilder_;
 
       /**
        * <pre>
@@ -3922,7 +3922,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
-      public java.util.List<lnrpc.LightningOuterClass.RouteHint> getRouteHintsList() {
+      public java.util.List<lnrpc.Lnd.RouteHint> getRouteHintsList() {
         if (routeHintsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(routeHints_);
         } else {
@@ -3952,7 +3952,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
-      public lnrpc.LightningOuterClass.RouteHint getRouteHints(int index) {
+      public lnrpc.Lnd.RouteHint getRouteHints(int index) {
         if (routeHintsBuilder_ == null) {
           return routeHints_.get(index);
         } else {
@@ -3968,7 +3968,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
       public Builder setRouteHints(
-          int index, lnrpc.LightningOuterClass.RouteHint value) {
+          int index, lnrpc.Lnd.RouteHint value) {
         if (routeHintsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3990,7 +3990,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
       public Builder setRouteHints(
-          int index, lnrpc.LightningOuterClass.RouteHint.Builder builderForValue) {
+          int index, lnrpc.Lnd.RouteHint.Builder builderForValue) {
         if (routeHintsBuilder_ == null) {
           ensureRouteHintsIsMutable();
           routeHints_.set(index, builderForValue.build());
@@ -4008,7 +4008,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
-      public Builder addRouteHints(lnrpc.LightningOuterClass.RouteHint value) {
+      public Builder addRouteHints(lnrpc.Lnd.RouteHint value) {
         if (routeHintsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4030,7 +4030,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
       public Builder addRouteHints(
-          int index, lnrpc.LightningOuterClass.RouteHint value) {
+          int index, lnrpc.Lnd.RouteHint value) {
         if (routeHintsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4052,7 +4052,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
       public Builder addRouteHints(
-          lnrpc.LightningOuterClass.RouteHint.Builder builderForValue) {
+          lnrpc.Lnd.RouteHint.Builder builderForValue) {
         if (routeHintsBuilder_ == null) {
           ensureRouteHintsIsMutable();
           routeHints_.add(builderForValue.build());
@@ -4071,7 +4071,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
       public Builder addRouteHints(
-          int index, lnrpc.LightningOuterClass.RouteHint.Builder builderForValue) {
+          int index, lnrpc.Lnd.RouteHint.Builder builderForValue) {
         if (routeHintsBuilder_ == null) {
           ensureRouteHintsIsMutable();
           routeHints_.add(index, builderForValue.build());
@@ -4090,7 +4090,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
       public Builder addAllRouteHints(
-          java.lang.Iterable<? extends lnrpc.LightningOuterClass.RouteHint> values) {
+          java.lang.Iterable<? extends lnrpc.Lnd.RouteHint> values) {
         if (routeHintsBuilder_ == null) {
           ensureRouteHintsIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -4145,7 +4145,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
-      public lnrpc.LightningOuterClass.RouteHint.Builder getRouteHintsBuilder(
+      public lnrpc.Lnd.RouteHint.Builder getRouteHintsBuilder(
           int index) {
         return getRouteHintsFieldBuilder().getBuilder(index);
       }
@@ -4157,7 +4157,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
-      public lnrpc.LightningOuterClass.RouteHintOrBuilder getRouteHintsOrBuilder(
+      public lnrpc.Lnd.RouteHintOrBuilder getRouteHintsOrBuilder(
           int index) {
         if (routeHintsBuilder_ == null) {
           return routeHints_.get(index);  } else {
@@ -4172,7 +4172,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
-      public java.util.List<? extends lnrpc.LightningOuterClass.RouteHintOrBuilder> 
+      public java.util.List<? extends lnrpc.Lnd.RouteHintOrBuilder> 
            getRouteHintsOrBuilderList() {
         if (routeHintsBuilder_ != null) {
           return routeHintsBuilder_.getMessageOrBuilderList();
@@ -4188,9 +4188,9 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
-      public lnrpc.LightningOuterClass.RouteHint.Builder addRouteHintsBuilder() {
+      public lnrpc.Lnd.RouteHint.Builder addRouteHintsBuilder() {
         return getRouteHintsFieldBuilder().addBuilder(
-            lnrpc.LightningOuterClass.RouteHint.getDefaultInstance());
+            lnrpc.Lnd.RouteHint.getDefaultInstance());
       }
       /**
        * <pre>
@@ -4200,10 +4200,10 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
-      public lnrpc.LightningOuterClass.RouteHint.Builder addRouteHintsBuilder(
+      public lnrpc.Lnd.RouteHint.Builder addRouteHintsBuilder(
           int index) {
         return getRouteHintsFieldBuilder().addBuilder(
-            index, lnrpc.LightningOuterClass.RouteHint.getDefaultInstance());
+            index, lnrpc.Lnd.RouteHint.getDefaultInstance());
       }
       /**
        * <pre>
@@ -4213,16 +4213,16 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.RouteHint route_hints = 10;</code>
        */
-      public java.util.List<lnrpc.LightningOuterClass.RouteHint.Builder> 
+      public java.util.List<lnrpc.Lnd.RouteHint.Builder> 
            getRouteHintsBuilderList() {
         return getRouteHintsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          lnrpc.LightningOuterClass.RouteHint, lnrpc.LightningOuterClass.RouteHint.Builder, lnrpc.LightningOuterClass.RouteHintOrBuilder> 
+          lnrpc.Lnd.RouteHint, lnrpc.Lnd.RouteHint.Builder, lnrpc.Lnd.RouteHintOrBuilder> 
           getRouteHintsFieldBuilder() {
         if (routeHintsBuilder_ == null) {
           routeHintsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              lnrpc.LightningOuterClass.RouteHint, lnrpc.LightningOuterClass.RouteHint.Builder, lnrpc.LightningOuterClass.RouteHintOrBuilder>(
+              lnrpc.Lnd.RouteHint, lnrpc.Lnd.RouteHint.Builder, lnrpc.Lnd.RouteHintOrBuilder>(
                   routeHints_,
                   ((bitField0_ & 0x00004000) != 0),
                   getParentForChildren(),
@@ -4487,9 +4487,9 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.FeatureBit dest_features = 16;</code>
        * @return A list containing the destFeatures.
        */
-      public java.util.List<lnrpc.LightningOuterClass.FeatureBit> getDestFeaturesList() {
+      public java.util.List<lnrpc.Lnd.FeatureBit> getDestFeaturesList() {
         return new com.google.protobuf.Internal.ListAdapter<
-            java.lang.Integer, lnrpc.LightningOuterClass.FeatureBit>(destFeatures_, destFeatures_converter_);
+            java.lang.Integer, lnrpc.Lnd.FeatureBit>(destFeatures_, destFeatures_converter_);
       }
       /**
        * <pre>
@@ -4521,7 +4521,7 @@ com.google.protobuf.ByteString defaultValue) {
        * @param index The index of the element to return.
        * @return The destFeatures at the given index.
        */
-      public lnrpc.LightningOuterClass.FeatureBit getDestFeatures(int index) {
+      public lnrpc.Lnd.FeatureBit getDestFeatures(int index) {
         return destFeatures_converter_.convert(destFeatures_.get(index));
       }
       /**
@@ -4540,7 +4540,7 @@ com.google.protobuf.ByteString defaultValue) {
        * @return This builder for chaining.
        */
       public Builder setDestFeatures(
-          int index, lnrpc.LightningOuterClass.FeatureBit value) {
+          int index, lnrpc.Lnd.FeatureBit value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -4563,7 +4563,7 @@ com.google.protobuf.ByteString defaultValue) {
        * @param value The destFeatures to add.
        * @return This builder for chaining.
        */
-      public Builder addDestFeatures(lnrpc.LightningOuterClass.FeatureBit value) {
+      public Builder addDestFeatures(lnrpc.Lnd.FeatureBit value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -4587,9 +4587,9 @@ com.google.protobuf.ByteString defaultValue) {
        * @return This builder for chaining.
        */
       public Builder addAllDestFeatures(
-          java.lang.Iterable<? extends lnrpc.LightningOuterClass.FeatureBit> values) {
+          java.lang.Iterable<? extends lnrpc.Lnd.FeatureBit> values) {
         ensureDestFeaturesIsMutable();
-        for (lnrpc.LightningOuterClass.FeatureBit value : values) {
+        for (lnrpc.Lnd.FeatureBit value : values) {
           destFeatures_.add(value.getNumber());
         }
         onChanged();
@@ -7383,7 +7383,7 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>.lnrpc.Route route = 2;</code>
      * @return The route.
      */
-    lnrpc.LightningOuterClass.Route getRoute();
+    lnrpc.Lnd.Route getRoute();
     /**
      * <pre>
      * Route that should be used to attempt to complete the payment.
@@ -7391,7 +7391,7 @@ com.google.protobuf.ByteString defaultValue) {
      *
      * <code>.lnrpc.Route route = 2;</code>
      */
-    lnrpc.LightningOuterClass.RouteOrBuilder getRouteOrBuilder();
+    lnrpc.Lnd.RouteOrBuilder getRouteOrBuilder();
 
     /**
      * <pre>
@@ -7460,7 +7460,7 @@ com.google.protobuf.ByteString defaultValue) {
     }
 
     public static final int ROUTE_FIELD_NUMBER = 2;
-    private lnrpc.LightningOuterClass.Route route_;
+    private lnrpc.Lnd.Route route_;
     /**
      * <pre>
      * Route that should be used to attempt to complete the payment.
@@ -7482,8 +7482,8 @@ com.google.protobuf.ByteString defaultValue) {
      * @return The route.
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.Route getRoute() {
-      return route_ == null ? lnrpc.LightningOuterClass.Route.getDefaultInstance() : route_;
+    public lnrpc.Lnd.Route getRoute() {
+      return route_ == null ? lnrpc.Lnd.Route.getDefaultInstance() : route_;
     }
     /**
      * <pre>
@@ -7493,8 +7493,8 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>.lnrpc.Route route = 2;</code>
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.RouteOrBuilder getRouteOrBuilder() {
-      return route_ == null ? lnrpc.LightningOuterClass.Route.getDefaultInstance() : route_;
+    public lnrpc.Lnd.RouteOrBuilder getRouteOrBuilder() {
+      return route_ == null ? lnrpc.Lnd.Route.getDefaultInstance() : route_;
     }
 
     public static final int SKIP_TEMP_ERR_FIELD_NUMBER = 3;
@@ -7954,9 +7954,9 @@ com.google.protobuf.ByteString defaultValue) {
         return this;
       }
 
-      private lnrpc.LightningOuterClass.Route route_;
+      private lnrpc.Lnd.Route route_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.Route, lnrpc.LightningOuterClass.Route.Builder, lnrpc.LightningOuterClass.RouteOrBuilder> routeBuilder_;
+          lnrpc.Lnd.Route, lnrpc.Lnd.Route.Builder, lnrpc.Lnd.RouteOrBuilder> routeBuilder_;
       /**
        * <pre>
        * Route that should be used to attempt to complete the payment.
@@ -7976,9 +7976,9 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>.lnrpc.Route route = 2;</code>
        * @return The route.
        */
-      public lnrpc.LightningOuterClass.Route getRoute() {
+      public lnrpc.Lnd.Route getRoute() {
         if (routeBuilder_ == null) {
-          return route_ == null ? lnrpc.LightningOuterClass.Route.getDefaultInstance() : route_;
+          return route_ == null ? lnrpc.Lnd.Route.getDefaultInstance() : route_;
         } else {
           return routeBuilder_.getMessage();
         }
@@ -7990,7 +7990,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Route route = 2;</code>
        */
-      public Builder setRoute(lnrpc.LightningOuterClass.Route value) {
+      public Builder setRoute(lnrpc.Lnd.Route value) {
         if (routeBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -8011,7 +8011,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>.lnrpc.Route route = 2;</code>
        */
       public Builder setRoute(
-          lnrpc.LightningOuterClass.Route.Builder builderForValue) {
+          lnrpc.Lnd.Route.Builder builderForValue) {
         if (routeBuilder_ == null) {
           route_ = builderForValue.build();
         } else {
@@ -8028,11 +8028,11 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Route route = 2;</code>
        */
-      public Builder mergeRoute(lnrpc.LightningOuterClass.Route value) {
+      public Builder mergeRoute(lnrpc.Lnd.Route value) {
         if (routeBuilder_ == null) {
           if (((bitField0_ & 0x00000002) != 0) &&
             route_ != null &&
-            route_ != lnrpc.LightningOuterClass.Route.getDefaultInstance()) {
+            route_ != lnrpc.Lnd.Route.getDefaultInstance()) {
             getRouteBuilder().mergeFrom(value);
           } else {
             route_ = value;
@@ -8070,7 +8070,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Route route = 2;</code>
        */
-      public lnrpc.LightningOuterClass.Route.Builder getRouteBuilder() {
+      public lnrpc.Lnd.Route.Builder getRouteBuilder() {
         bitField0_ |= 0x00000002;
         onChanged();
         return getRouteFieldBuilder().getBuilder();
@@ -8082,12 +8082,12 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Route route = 2;</code>
        */
-      public lnrpc.LightningOuterClass.RouteOrBuilder getRouteOrBuilder() {
+      public lnrpc.Lnd.RouteOrBuilder getRouteOrBuilder() {
         if (routeBuilder_ != null) {
           return routeBuilder_.getMessageOrBuilder();
         } else {
           return route_ == null ?
-              lnrpc.LightningOuterClass.Route.getDefaultInstance() : route_;
+              lnrpc.Lnd.Route.getDefaultInstance() : route_;
         }
       }
       /**
@@ -8098,11 +8098,11 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>.lnrpc.Route route = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.Route, lnrpc.LightningOuterClass.Route.Builder, lnrpc.LightningOuterClass.RouteOrBuilder> 
+          lnrpc.Lnd.Route, lnrpc.Lnd.Route.Builder, lnrpc.Lnd.RouteOrBuilder> 
           getRouteFieldBuilder() {
         if (routeBuilder_ == null) {
           routeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              lnrpc.LightningOuterClass.Route, lnrpc.LightningOuterClass.Route.Builder, lnrpc.LightningOuterClass.RouteOrBuilder>(
+              lnrpc.Lnd.Route, lnrpc.Lnd.Route.Builder, lnrpc.Lnd.RouteOrBuilder>(
                   getRoute(),
                   getParentForChildren(),
                   isClean());
@@ -8261,7 +8261,7 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>.lnrpc.Failure failure = 2;</code>
      * @return The failure.
      */
-    lnrpc.LightningOuterClass.Failure getFailure();
+    lnrpc.Lnd.Failure getFailure();
     /**
      * <pre>
      * The failure message in case the payment failed.
@@ -8269,7 +8269,7 @@ com.google.protobuf.ByteString defaultValue) {
      *
      * <code>.lnrpc.Failure failure = 2;</code>
      */
-    lnrpc.LightningOuterClass.FailureOrBuilder getFailureOrBuilder();
+    lnrpc.Lnd.FailureOrBuilder getFailureOrBuilder();
   }
   /**
    * Protobuf type {@code routerrpc.SendToRouteResponse}
@@ -8324,7 +8324,7 @@ com.google.protobuf.ByteString defaultValue) {
     }
 
     public static final int FAILURE_FIELD_NUMBER = 2;
-    private lnrpc.LightningOuterClass.Failure failure_;
+    private lnrpc.Lnd.Failure failure_;
     /**
      * <pre>
      * The failure message in case the payment failed.
@@ -8346,8 +8346,8 @@ com.google.protobuf.ByteString defaultValue) {
      * @return The failure.
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.Failure getFailure() {
-      return failure_ == null ? lnrpc.LightningOuterClass.Failure.getDefaultInstance() : failure_;
+    public lnrpc.Lnd.Failure getFailure() {
+      return failure_ == null ? lnrpc.Lnd.Failure.getDefaultInstance() : failure_;
     }
     /**
      * <pre>
@@ -8357,8 +8357,8 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>.lnrpc.Failure failure = 2;</code>
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.FailureOrBuilder getFailureOrBuilder() {
-      return failure_ == null ? lnrpc.LightningOuterClass.Failure.getDefaultInstance() : failure_;
+    public lnrpc.Lnd.FailureOrBuilder getFailureOrBuilder() {
+      return failure_ == null ? lnrpc.Lnd.Failure.getDefaultInstance() : failure_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -8775,9 +8775,9 @@ com.google.protobuf.ByteString defaultValue) {
         return this;
       }
 
-      private lnrpc.LightningOuterClass.Failure failure_;
+      private lnrpc.Lnd.Failure failure_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.Failure, lnrpc.LightningOuterClass.Failure.Builder, lnrpc.LightningOuterClass.FailureOrBuilder> failureBuilder_;
+          lnrpc.Lnd.Failure, lnrpc.Lnd.Failure.Builder, lnrpc.Lnd.FailureOrBuilder> failureBuilder_;
       /**
        * <pre>
        * The failure message in case the payment failed.
@@ -8797,9 +8797,9 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>.lnrpc.Failure failure = 2;</code>
        * @return The failure.
        */
-      public lnrpc.LightningOuterClass.Failure getFailure() {
+      public lnrpc.Lnd.Failure getFailure() {
         if (failureBuilder_ == null) {
-          return failure_ == null ? lnrpc.LightningOuterClass.Failure.getDefaultInstance() : failure_;
+          return failure_ == null ? lnrpc.Lnd.Failure.getDefaultInstance() : failure_;
         } else {
           return failureBuilder_.getMessage();
         }
@@ -8811,7 +8811,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Failure failure = 2;</code>
        */
-      public Builder setFailure(lnrpc.LightningOuterClass.Failure value) {
+      public Builder setFailure(lnrpc.Lnd.Failure value) {
         if (failureBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -8832,7 +8832,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>.lnrpc.Failure failure = 2;</code>
        */
       public Builder setFailure(
-          lnrpc.LightningOuterClass.Failure.Builder builderForValue) {
+          lnrpc.Lnd.Failure.Builder builderForValue) {
         if (failureBuilder_ == null) {
           failure_ = builderForValue.build();
         } else {
@@ -8849,11 +8849,11 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Failure failure = 2;</code>
        */
-      public Builder mergeFailure(lnrpc.LightningOuterClass.Failure value) {
+      public Builder mergeFailure(lnrpc.Lnd.Failure value) {
         if (failureBuilder_ == null) {
           if (((bitField0_ & 0x00000002) != 0) &&
             failure_ != null &&
-            failure_ != lnrpc.LightningOuterClass.Failure.getDefaultInstance()) {
+            failure_ != lnrpc.Lnd.Failure.getDefaultInstance()) {
             getFailureBuilder().mergeFrom(value);
           } else {
             failure_ = value;
@@ -8891,7 +8891,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Failure failure = 2;</code>
        */
-      public lnrpc.LightningOuterClass.Failure.Builder getFailureBuilder() {
+      public lnrpc.Lnd.Failure.Builder getFailureBuilder() {
         bitField0_ |= 0x00000002;
         onChanged();
         return getFailureFieldBuilder().getBuilder();
@@ -8903,12 +8903,12 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Failure failure = 2;</code>
        */
-      public lnrpc.LightningOuterClass.FailureOrBuilder getFailureOrBuilder() {
+      public lnrpc.Lnd.FailureOrBuilder getFailureOrBuilder() {
         if (failureBuilder_ != null) {
           return failureBuilder_.getMessageOrBuilder();
         } else {
           return failure_ == null ?
-              lnrpc.LightningOuterClass.Failure.getDefaultInstance() : failure_;
+              lnrpc.Lnd.Failure.getDefaultInstance() : failure_;
         }
       }
       /**
@@ -8919,11 +8919,11 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>.lnrpc.Failure failure = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.Failure, lnrpc.LightningOuterClass.Failure.Builder, lnrpc.LightningOuterClass.FailureOrBuilder> 
+          lnrpc.Lnd.Failure, lnrpc.Lnd.Failure.Builder, lnrpc.Lnd.FailureOrBuilder> 
           getFailureFieldBuilder() {
         if (failureBuilder_ == null) {
           failureBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              lnrpc.LightningOuterClass.Failure, lnrpc.LightningOuterClass.Failure.Builder, lnrpc.LightningOuterClass.FailureOrBuilder>(
+              lnrpc.Lnd.Failure, lnrpc.Lnd.Failure.Builder, lnrpc.Lnd.FailureOrBuilder>(
                   getFailure(),
                   getParentForChildren(),
                   isClean());
@@ -22387,7 +22387,7 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>.lnrpc.Route route = 1;</code>
      * @return The route.
      */
-    lnrpc.LightningOuterClass.Route getRoute();
+    lnrpc.Lnd.Route getRoute();
     /**
      * <pre>
      *
@@ -22396,7 +22396,7 @@ com.google.protobuf.ByteString defaultValue) {
      *
      * <code>.lnrpc.Route route = 1;</code>
      */
-    lnrpc.LightningOuterClass.RouteOrBuilder getRouteOrBuilder();
+    lnrpc.Lnd.RouteOrBuilder getRouteOrBuilder();
   }
   /**
    * Protobuf type {@code routerrpc.BuildRouteResponse}
@@ -22435,7 +22435,7 @@ com.google.protobuf.ByteString defaultValue) {
 
     private int bitField0_;
     public static final int ROUTE_FIELD_NUMBER = 1;
-    private lnrpc.LightningOuterClass.Route route_;
+    private lnrpc.Lnd.Route route_;
     /**
      * <pre>
      *
@@ -22459,8 +22459,8 @@ com.google.protobuf.ByteString defaultValue) {
      * @return The route.
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.Route getRoute() {
-      return route_ == null ? lnrpc.LightningOuterClass.Route.getDefaultInstance() : route_;
+    public lnrpc.Lnd.Route getRoute() {
+      return route_ == null ? lnrpc.Lnd.Route.getDefaultInstance() : route_;
     }
     /**
      * <pre>
@@ -22471,8 +22471,8 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>.lnrpc.Route route = 1;</code>
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.RouteOrBuilder getRouteOrBuilder() {
-      return route_ == null ? lnrpc.LightningOuterClass.Route.getDefaultInstance() : route_;
+    public lnrpc.Lnd.RouteOrBuilder getRouteOrBuilder() {
+      return route_ == null ? lnrpc.Lnd.Route.getDefaultInstance() : route_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -22822,9 +22822,9 @@ com.google.protobuf.ByteString defaultValue) {
       }
       private int bitField0_;
 
-      private lnrpc.LightningOuterClass.Route route_;
+      private lnrpc.Lnd.Route route_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.Route, lnrpc.LightningOuterClass.Route.Builder, lnrpc.LightningOuterClass.RouteOrBuilder> routeBuilder_;
+          lnrpc.Lnd.Route, lnrpc.Lnd.Route.Builder, lnrpc.Lnd.RouteOrBuilder> routeBuilder_;
       /**
        * <pre>
        *
@@ -22846,9 +22846,9 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>.lnrpc.Route route = 1;</code>
        * @return The route.
        */
-      public lnrpc.LightningOuterClass.Route getRoute() {
+      public lnrpc.Lnd.Route getRoute() {
         if (routeBuilder_ == null) {
-          return route_ == null ? lnrpc.LightningOuterClass.Route.getDefaultInstance() : route_;
+          return route_ == null ? lnrpc.Lnd.Route.getDefaultInstance() : route_;
         } else {
           return routeBuilder_.getMessage();
         }
@@ -22861,7 +22861,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Route route = 1;</code>
        */
-      public Builder setRoute(lnrpc.LightningOuterClass.Route value) {
+      public Builder setRoute(lnrpc.Lnd.Route value) {
         if (routeBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -22883,7 +22883,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>.lnrpc.Route route = 1;</code>
        */
       public Builder setRoute(
-          lnrpc.LightningOuterClass.Route.Builder builderForValue) {
+          lnrpc.Lnd.Route.Builder builderForValue) {
         if (routeBuilder_ == null) {
           route_ = builderForValue.build();
         } else {
@@ -22901,11 +22901,11 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Route route = 1;</code>
        */
-      public Builder mergeRoute(lnrpc.LightningOuterClass.Route value) {
+      public Builder mergeRoute(lnrpc.Lnd.Route value) {
         if (routeBuilder_ == null) {
           if (((bitField0_ & 0x00000001) != 0) &&
             route_ != null &&
-            route_ != lnrpc.LightningOuterClass.Route.getDefaultInstance()) {
+            route_ != lnrpc.Lnd.Route.getDefaultInstance()) {
             getRouteBuilder().mergeFrom(value);
           } else {
             route_ = value;
@@ -22945,7 +22945,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Route route = 1;</code>
        */
-      public lnrpc.LightningOuterClass.Route.Builder getRouteBuilder() {
+      public lnrpc.Lnd.Route.Builder getRouteBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getRouteFieldBuilder().getBuilder();
@@ -22958,12 +22958,12 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>.lnrpc.Route route = 1;</code>
        */
-      public lnrpc.LightningOuterClass.RouteOrBuilder getRouteOrBuilder() {
+      public lnrpc.Lnd.RouteOrBuilder getRouteOrBuilder() {
         if (routeBuilder_ != null) {
           return routeBuilder_.getMessageOrBuilder();
         } else {
           return route_ == null ?
-              lnrpc.LightningOuterClass.Route.getDefaultInstance() : route_;
+              lnrpc.Lnd.Route.getDefaultInstance() : route_;
         }
       }
       /**
@@ -22975,11 +22975,11 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>.lnrpc.Route route = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.Route, lnrpc.LightningOuterClass.Route.Builder, lnrpc.LightningOuterClass.RouteOrBuilder> 
+          lnrpc.Lnd.Route, lnrpc.Lnd.Route.Builder, lnrpc.Lnd.RouteOrBuilder> 
           getRouteFieldBuilder() {
         if (routeBuilder_ == null) {
           routeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              lnrpc.LightningOuterClass.Route, lnrpc.LightningOuterClass.Route.Builder, lnrpc.LightningOuterClass.RouteOrBuilder>(
+              lnrpc.Lnd.Route, lnrpc.Lnd.Route.Builder, lnrpc.Lnd.RouteOrBuilder>(
                   getRoute(),
                   getParentForChildren(),
                   isClean());
@@ -29417,7 +29417,7 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>.lnrpc.Failure.FailureCode wire_failure = 2;</code>
      * @return The wireFailure.
      */
-    lnrpc.LightningOuterClass.Failure.FailureCode getWireFailure();
+    lnrpc.Lnd.Failure.FailureCode getWireFailure();
 
     /**
      * <pre>
@@ -29562,9 +29562,9 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>.lnrpc.Failure.FailureCode wire_failure = 2;</code>
      * @return The wireFailure.
      */
-    @java.lang.Override public lnrpc.LightningOuterClass.Failure.FailureCode getWireFailure() {
-      lnrpc.LightningOuterClass.Failure.FailureCode result = lnrpc.LightningOuterClass.Failure.FailureCode.forNumber(wireFailure_);
-      return result == null ? lnrpc.LightningOuterClass.Failure.FailureCode.UNRECOGNIZED : result;
+    @java.lang.Override public lnrpc.Lnd.Failure.FailureCode getWireFailure() {
+      lnrpc.Lnd.Failure.FailureCode result = lnrpc.Lnd.Failure.FailureCode.forNumber(wireFailure_);
+      return result == null ? lnrpc.Lnd.Failure.FailureCode.UNRECOGNIZED : result;
     }
 
     public static final int FAILURE_DETAIL_FIELD_NUMBER = 3;
@@ -29663,7 +29663,7 @@ com.google.protobuf.ByteString defaultValue) {
       if (((bitField0_ & 0x00000001) != 0)) {
         output.writeMessage(1, getInfo());
       }
-      if (wireFailure_ != lnrpc.LightningOuterClass.Failure.FailureCode.RESERVED.getNumber()) {
+      if (wireFailure_ != lnrpc.Lnd.Failure.FailureCode.RESERVED.getNumber()) {
         output.writeEnum(2, wireFailure_);
       }
       if (failureDetail_ != routerrpc.RouterOuterClass.FailureDetail.UNKNOWN.getNumber()) {
@@ -29685,7 +29685,7 @@ com.google.protobuf.ByteString defaultValue) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getInfo());
       }
-      if (wireFailure_ != lnrpc.LightningOuterClass.Failure.FailureCode.RESERVED.getNumber()) {
+      if (wireFailure_ != lnrpc.Lnd.Failure.FailureCode.RESERVED.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, wireFailure_);
       }
@@ -30254,9 +30254,9 @@ com.google.protobuf.ByteString defaultValue) {
        * @return The wireFailure.
        */
       @java.lang.Override
-      public lnrpc.LightningOuterClass.Failure.FailureCode getWireFailure() {
-        lnrpc.LightningOuterClass.Failure.FailureCode result = lnrpc.LightningOuterClass.Failure.FailureCode.forNumber(wireFailure_);
-        return result == null ? lnrpc.LightningOuterClass.Failure.FailureCode.UNRECOGNIZED : result;
+      public lnrpc.Lnd.Failure.FailureCode getWireFailure() {
+        lnrpc.Lnd.Failure.FailureCode result = lnrpc.Lnd.Failure.FailureCode.forNumber(wireFailure_);
+        return result == null ? lnrpc.Lnd.Failure.FailureCode.UNRECOGNIZED : result;
       }
       /**
        * <pre>
@@ -30267,7 +30267,7 @@ com.google.protobuf.ByteString defaultValue) {
        * @param value The wireFailure to set.
        * @return This builder for chaining.
        */
-      public Builder setWireFailure(lnrpc.LightningOuterClass.Failure.FailureCode value) {
+      public Builder setWireFailure(lnrpc.Lnd.Failure.FailureCode value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -30576,7 +30576,7 @@ com.google.protobuf.ByteString defaultValue) {
      *
      * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
      */
-    java.util.List<lnrpc.LightningOuterClass.HTLCAttempt> 
+    java.util.List<lnrpc.Lnd.HTLCAttempt> 
         getHtlcsList();
     /**
      * <pre>
@@ -30586,7 +30586,7 @@ com.google.protobuf.ByteString defaultValue) {
      *
      * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
      */
-    lnrpc.LightningOuterClass.HTLCAttempt getHtlcs(int index);
+    lnrpc.Lnd.HTLCAttempt getHtlcs(int index);
     /**
      * <pre>
      *
@@ -30604,7 +30604,7 @@ com.google.protobuf.ByteString defaultValue) {
      *
      * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
      */
-    java.util.List<? extends lnrpc.LightningOuterClass.HTLCAttemptOrBuilder> 
+    java.util.List<? extends lnrpc.Lnd.HTLCAttemptOrBuilder> 
         getHtlcsOrBuilderList();
     /**
      * <pre>
@@ -30614,7 +30614,7 @@ com.google.protobuf.ByteString defaultValue) {
      *
      * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
      */
-    lnrpc.LightningOuterClass.HTLCAttemptOrBuilder getHtlcsOrBuilder(
+    lnrpc.Lnd.HTLCAttemptOrBuilder getHtlcsOrBuilder(
         int index);
   }
   /**
@@ -30699,7 +30699,7 @@ com.google.protobuf.ByteString defaultValue) {
 
     public static final int HTLCS_FIELD_NUMBER = 4;
     @SuppressWarnings("serial")
-    private java.util.List<lnrpc.LightningOuterClass.HTLCAttempt> htlcs_;
+    private java.util.List<lnrpc.Lnd.HTLCAttempt> htlcs_;
     /**
      * <pre>
      *
@@ -30709,7 +30709,7 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
      */
     @java.lang.Override
-    public java.util.List<lnrpc.LightningOuterClass.HTLCAttempt> getHtlcsList() {
+    public java.util.List<lnrpc.Lnd.HTLCAttempt> getHtlcsList() {
       return htlcs_;
     }
     /**
@@ -30721,7 +30721,7 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
      */
     @java.lang.Override
-    public java.util.List<? extends lnrpc.LightningOuterClass.HTLCAttemptOrBuilder> 
+    public java.util.List<? extends lnrpc.Lnd.HTLCAttemptOrBuilder> 
         getHtlcsOrBuilderList() {
       return htlcs_;
     }
@@ -30746,7 +30746,7 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.HTLCAttempt getHtlcs(int index) {
+    public lnrpc.Lnd.HTLCAttempt getHtlcs(int index) {
       return htlcs_.get(index);
     }
     /**
@@ -30758,7 +30758,7 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.HTLCAttemptOrBuilder getHtlcsOrBuilder(
+    public lnrpc.Lnd.HTLCAttemptOrBuilder getHtlcsOrBuilder(
         int index) {
       return htlcs_.get(index);
     }
@@ -31153,9 +31153,9 @@ com.google.protobuf.ByteString defaultValue) {
                 break;
               } // case 18
               case 34: {
-                lnrpc.LightningOuterClass.HTLCAttempt m =
+                lnrpc.Lnd.HTLCAttempt m =
                     input.readMessage(
-                        lnrpc.LightningOuterClass.HTLCAttempt.parser(),
+                        lnrpc.Lnd.HTLCAttempt.parser(),
                         extensionRegistry);
                 if (htlcsBuilder_ == null) {
                   ensureHtlcsIsMutable();
@@ -31302,17 +31302,17 @@ com.google.protobuf.ByteString defaultValue) {
         return this;
       }
 
-      private java.util.List<lnrpc.LightningOuterClass.HTLCAttempt> htlcs_ =
+      private java.util.List<lnrpc.Lnd.HTLCAttempt> htlcs_ =
         java.util.Collections.emptyList();
       private void ensureHtlcsIsMutable() {
         if (!((bitField0_ & 0x00000004) != 0)) {
-          htlcs_ = new java.util.ArrayList<lnrpc.LightningOuterClass.HTLCAttempt>(htlcs_);
+          htlcs_ = new java.util.ArrayList<lnrpc.Lnd.HTLCAttempt>(htlcs_);
           bitField0_ |= 0x00000004;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          lnrpc.LightningOuterClass.HTLCAttempt, lnrpc.LightningOuterClass.HTLCAttempt.Builder, lnrpc.LightningOuterClass.HTLCAttemptOrBuilder> htlcsBuilder_;
+          lnrpc.Lnd.HTLCAttempt, lnrpc.Lnd.HTLCAttempt.Builder, lnrpc.Lnd.HTLCAttemptOrBuilder> htlcsBuilder_;
 
       /**
        * <pre>
@@ -31322,7 +31322,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
-      public java.util.List<lnrpc.LightningOuterClass.HTLCAttempt> getHtlcsList() {
+      public java.util.List<lnrpc.Lnd.HTLCAttempt> getHtlcsList() {
         if (htlcsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(htlcs_);
         } else {
@@ -31352,7 +31352,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
-      public lnrpc.LightningOuterClass.HTLCAttempt getHtlcs(int index) {
+      public lnrpc.Lnd.HTLCAttempt getHtlcs(int index) {
         if (htlcsBuilder_ == null) {
           return htlcs_.get(index);
         } else {
@@ -31368,7 +31368,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
       public Builder setHtlcs(
-          int index, lnrpc.LightningOuterClass.HTLCAttempt value) {
+          int index, lnrpc.Lnd.HTLCAttempt value) {
         if (htlcsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -31390,7 +31390,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
       public Builder setHtlcs(
-          int index, lnrpc.LightningOuterClass.HTLCAttempt.Builder builderForValue) {
+          int index, lnrpc.Lnd.HTLCAttempt.Builder builderForValue) {
         if (htlcsBuilder_ == null) {
           ensureHtlcsIsMutable();
           htlcs_.set(index, builderForValue.build());
@@ -31408,7 +31408,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
-      public Builder addHtlcs(lnrpc.LightningOuterClass.HTLCAttempt value) {
+      public Builder addHtlcs(lnrpc.Lnd.HTLCAttempt value) {
         if (htlcsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -31430,7 +31430,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
       public Builder addHtlcs(
-          int index, lnrpc.LightningOuterClass.HTLCAttempt value) {
+          int index, lnrpc.Lnd.HTLCAttempt value) {
         if (htlcsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -31452,7 +31452,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
       public Builder addHtlcs(
-          lnrpc.LightningOuterClass.HTLCAttempt.Builder builderForValue) {
+          lnrpc.Lnd.HTLCAttempt.Builder builderForValue) {
         if (htlcsBuilder_ == null) {
           ensureHtlcsIsMutable();
           htlcs_.add(builderForValue.build());
@@ -31471,7 +31471,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
       public Builder addHtlcs(
-          int index, lnrpc.LightningOuterClass.HTLCAttempt.Builder builderForValue) {
+          int index, lnrpc.Lnd.HTLCAttempt.Builder builderForValue) {
         if (htlcsBuilder_ == null) {
           ensureHtlcsIsMutable();
           htlcs_.add(index, builderForValue.build());
@@ -31490,7 +31490,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
       public Builder addAllHtlcs(
-          java.lang.Iterable<? extends lnrpc.LightningOuterClass.HTLCAttempt> values) {
+          java.lang.Iterable<? extends lnrpc.Lnd.HTLCAttempt> values) {
         if (htlcsBuilder_ == null) {
           ensureHtlcsIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -31545,7 +31545,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
-      public lnrpc.LightningOuterClass.HTLCAttempt.Builder getHtlcsBuilder(
+      public lnrpc.Lnd.HTLCAttempt.Builder getHtlcsBuilder(
           int index) {
         return getHtlcsFieldBuilder().getBuilder(index);
       }
@@ -31557,7 +31557,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
-      public lnrpc.LightningOuterClass.HTLCAttemptOrBuilder getHtlcsOrBuilder(
+      public lnrpc.Lnd.HTLCAttemptOrBuilder getHtlcsOrBuilder(
           int index) {
         if (htlcsBuilder_ == null) {
           return htlcs_.get(index);  } else {
@@ -31572,7 +31572,7 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
-      public java.util.List<? extends lnrpc.LightningOuterClass.HTLCAttemptOrBuilder> 
+      public java.util.List<? extends lnrpc.Lnd.HTLCAttemptOrBuilder> 
            getHtlcsOrBuilderList() {
         if (htlcsBuilder_ != null) {
           return htlcsBuilder_.getMessageOrBuilderList();
@@ -31588,9 +31588,9 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
-      public lnrpc.LightningOuterClass.HTLCAttempt.Builder addHtlcsBuilder() {
+      public lnrpc.Lnd.HTLCAttempt.Builder addHtlcsBuilder() {
         return getHtlcsFieldBuilder().addBuilder(
-            lnrpc.LightningOuterClass.HTLCAttempt.getDefaultInstance());
+            lnrpc.Lnd.HTLCAttempt.getDefaultInstance());
       }
       /**
        * <pre>
@@ -31600,10 +31600,10 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
-      public lnrpc.LightningOuterClass.HTLCAttempt.Builder addHtlcsBuilder(
+      public lnrpc.Lnd.HTLCAttempt.Builder addHtlcsBuilder(
           int index) {
         return getHtlcsFieldBuilder().addBuilder(
-            index, lnrpc.LightningOuterClass.HTLCAttempt.getDefaultInstance());
+            index, lnrpc.Lnd.HTLCAttempt.getDefaultInstance());
       }
       /**
        * <pre>
@@ -31613,16 +31613,16 @@ com.google.protobuf.ByteString defaultValue) {
        *
        * <code>repeated .lnrpc.HTLCAttempt htlcs = 4;</code>
        */
-      public java.util.List<lnrpc.LightningOuterClass.HTLCAttempt.Builder> 
+      public java.util.List<lnrpc.Lnd.HTLCAttempt.Builder> 
            getHtlcsBuilderList() {
         return getHtlcsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          lnrpc.LightningOuterClass.HTLCAttempt, lnrpc.LightningOuterClass.HTLCAttempt.Builder, lnrpc.LightningOuterClass.HTLCAttemptOrBuilder> 
+          lnrpc.Lnd.HTLCAttempt, lnrpc.Lnd.HTLCAttempt.Builder, lnrpc.Lnd.HTLCAttemptOrBuilder> 
           getHtlcsFieldBuilder() {
         if (htlcsBuilder_ == null) {
           htlcsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              lnrpc.LightningOuterClass.HTLCAttempt, lnrpc.LightningOuterClass.HTLCAttempt.Builder, lnrpc.LightningOuterClass.HTLCAttemptOrBuilder>(
+              lnrpc.Lnd.HTLCAttempt, lnrpc.Lnd.HTLCAttempt.Builder, lnrpc.Lnd.HTLCAttemptOrBuilder>(
                   htlcs_,
                   ((bitField0_ & 0x00000004) != 0),
                   getParentForChildren(),
@@ -34243,7 +34243,7 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>.lnrpc.Failure.FailureCode failure_code = 5;</code>
      * @return The failureCode.
      */
-    lnrpc.LightningOuterClass.Failure.FailureCode getFailureCode();
+    lnrpc.Lnd.Failure.FailureCode getFailureCode();
   }
   /**
    * <pre>
@@ -34430,9 +34430,9 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>.lnrpc.Failure.FailureCode failure_code = 5;</code>
      * @return The failureCode.
      */
-    @java.lang.Override public lnrpc.LightningOuterClass.Failure.FailureCode getFailureCode() {
-      lnrpc.LightningOuterClass.Failure.FailureCode result = lnrpc.LightningOuterClass.Failure.FailureCode.forNumber(failureCode_);
-      return result == null ? lnrpc.LightningOuterClass.Failure.FailureCode.UNRECOGNIZED : result;
+    @java.lang.Override public lnrpc.Lnd.Failure.FailureCode getFailureCode() {
+      lnrpc.Lnd.Failure.FailureCode result = lnrpc.Lnd.Failure.FailureCode.forNumber(failureCode_);
+      return result == null ? lnrpc.Lnd.Failure.FailureCode.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -34461,7 +34461,7 @@ com.google.protobuf.ByteString defaultValue) {
       if (!failureMessage_.isEmpty()) {
         output.writeBytes(4, failureMessage_);
       }
-      if (failureCode_ != lnrpc.LightningOuterClass.Failure.FailureCode.RESERVED.getNumber()) {
+      if (failureCode_ != lnrpc.Lnd.Failure.FailureCode.RESERVED.getNumber()) {
         output.writeEnum(5, failureCode_);
       }
       getUnknownFields().writeTo(output);
@@ -34489,7 +34489,7 @@ com.google.protobuf.ByteString defaultValue) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(4, failureMessage_);
       }
-      if (failureCode_ != lnrpc.LightningOuterClass.Failure.FailureCode.RESERVED.getNumber()) {
+      if (failureCode_ != lnrpc.Lnd.Failure.FailureCode.RESERVED.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(5, failureCode_);
       }
@@ -35280,9 +35280,9 @@ com.google.protobuf.ByteString defaultValue) {
        * @return The failureCode.
        */
       @java.lang.Override
-      public lnrpc.LightningOuterClass.Failure.FailureCode getFailureCode() {
-        lnrpc.LightningOuterClass.Failure.FailureCode result = lnrpc.LightningOuterClass.Failure.FailureCode.forNumber(failureCode_);
-        return result == null ? lnrpc.LightningOuterClass.Failure.FailureCode.UNRECOGNIZED : result;
+      public lnrpc.Lnd.Failure.FailureCode getFailureCode() {
+        lnrpc.Lnd.Failure.FailureCode result = lnrpc.Lnd.Failure.FailureCode.forNumber(failureCode_);
+        return result == null ? lnrpc.Lnd.Failure.FailureCode.UNRECOGNIZED : result;
       }
       /**
        * <pre>
@@ -35299,7 +35299,7 @@ com.google.protobuf.ByteString defaultValue) {
        * @param value The failureCode to set.
        * @return This builder for chaining.
        */
-      public Builder setFailureCode(lnrpc.LightningOuterClass.Failure.FailureCode value) {
+      public Builder setFailureCode(lnrpc.Lnd.Failure.FailureCode value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -35405,11 +35405,11 @@ com.google.protobuf.ByteString defaultValue) {
      * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
      * @return The chanPoint.
      */
-    lnrpc.LightningOuterClass.ChannelPoint getChanPoint();
+    lnrpc.Lnd.ChannelPoint getChanPoint();
     /**
      * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
      */
-    lnrpc.LightningOuterClass.ChannelPointOrBuilder getChanPointOrBuilder();
+    lnrpc.Lnd.ChannelPointOrBuilder getChanPointOrBuilder();
 
     /**
      * <code>.routerrpc.ChanStatusAction action = 2;</code>
@@ -35460,7 +35460,7 @@ com.google.protobuf.ByteString defaultValue) {
 
     private int bitField0_;
     public static final int CHAN_POINT_FIELD_NUMBER = 1;
-    private lnrpc.LightningOuterClass.ChannelPoint chanPoint_;
+    private lnrpc.Lnd.ChannelPoint chanPoint_;
     /**
      * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
      * @return Whether the chanPoint field is set.
@@ -35474,15 +35474,15 @@ com.google.protobuf.ByteString defaultValue) {
      * @return The chanPoint.
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.ChannelPoint getChanPoint() {
-      return chanPoint_ == null ? lnrpc.LightningOuterClass.ChannelPoint.getDefaultInstance() : chanPoint_;
+    public lnrpc.Lnd.ChannelPoint getChanPoint() {
+      return chanPoint_ == null ? lnrpc.Lnd.ChannelPoint.getDefaultInstance() : chanPoint_;
     }
     /**
      * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.ChannelPointOrBuilder getChanPointOrBuilder() {
-      return chanPoint_ == null ? lnrpc.LightningOuterClass.ChannelPoint.getDefaultInstance() : chanPoint_;
+    public lnrpc.Lnd.ChannelPointOrBuilder getChanPointOrBuilder() {
+      return chanPoint_ == null ? lnrpc.Lnd.ChannelPoint.getDefaultInstance() : chanPoint_;
     }
 
     public static final int ACTION_FIELD_NUMBER = 2;
@@ -35872,9 +35872,9 @@ com.google.protobuf.ByteString defaultValue) {
       }
       private int bitField0_;
 
-      private lnrpc.LightningOuterClass.ChannelPoint chanPoint_;
+      private lnrpc.Lnd.ChannelPoint chanPoint_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.ChannelPoint, lnrpc.LightningOuterClass.ChannelPoint.Builder, lnrpc.LightningOuterClass.ChannelPointOrBuilder> chanPointBuilder_;
+          lnrpc.Lnd.ChannelPoint, lnrpc.Lnd.ChannelPoint.Builder, lnrpc.Lnd.ChannelPointOrBuilder> chanPointBuilder_;
       /**
        * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
        * @return Whether the chanPoint field is set.
@@ -35886,9 +35886,9 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
        * @return The chanPoint.
        */
-      public lnrpc.LightningOuterClass.ChannelPoint getChanPoint() {
+      public lnrpc.Lnd.ChannelPoint getChanPoint() {
         if (chanPointBuilder_ == null) {
-          return chanPoint_ == null ? lnrpc.LightningOuterClass.ChannelPoint.getDefaultInstance() : chanPoint_;
+          return chanPoint_ == null ? lnrpc.Lnd.ChannelPoint.getDefaultInstance() : chanPoint_;
         } else {
           return chanPointBuilder_.getMessage();
         }
@@ -35896,7 +35896,7 @@ com.google.protobuf.ByteString defaultValue) {
       /**
        * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
        */
-      public Builder setChanPoint(lnrpc.LightningOuterClass.ChannelPoint value) {
+      public Builder setChanPoint(lnrpc.Lnd.ChannelPoint value) {
         if (chanPointBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -35913,7 +35913,7 @@ com.google.protobuf.ByteString defaultValue) {
        * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
        */
       public Builder setChanPoint(
-          lnrpc.LightningOuterClass.ChannelPoint.Builder builderForValue) {
+          lnrpc.Lnd.ChannelPoint.Builder builderForValue) {
         if (chanPointBuilder_ == null) {
           chanPoint_ = builderForValue.build();
         } else {
@@ -35926,11 +35926,11 @@ com.google.protobuf.ByteString defaultValue) {
       /**
        * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
        */
-      public Builder mergeChanPoint(lnrpc.LightningOuterClass.ChannelPoint value) {
+      public Builder mergeChanPoint(lnrpc.Lnd.ChannelPoint value) {
         if (chanPointBuilder_ == null) {
           if (((bitField0_ & 0x00000001) != 0) &&
             chanPoint_ != null &&
-            chanPoint_ != lnrpc.LightningOuterClass.ChannelPoint.getDefaultInstance()) {
+            chanPoint_ != lnrpc.Lnd.ChannelPoint.getDefaultInstance()) {
             getChanPointBuilder().mergeFrom(value);
           } else {
             chanPoint_ = value;
@@ -35960,7 +35960,7 @@ com.google.protobuf.ByteString defaultValue) {
       /**
        * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
        */
-      public lnrpc.LightningOuterClass.ChannelPoint.Builder getChanPointBuilder() {
+      public lnrpc.Lnd.ChannelPoint.Builder getChanPointBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getChanPointFieldBuilder().getBuilder();
@@ -35968,23 +35968,23 @@ com.google.protobuf.ByteString defaultValue) {
       /**
        * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
        */
-      public lnrpc.LightningOuterClass.ChannelPointOrBuilder getChanPointOrBuilder() {
+      public lnrpc.Lnd.ChannelPointOrBuilder getChanPointOrBuilder() {
         if (chanPointBuilder_ != null) {
           return chanPointBuilder_.getMessageOrBuilder();
         } else {
           return chanPoint_ == null ?
-              lnrpc.LightningOuterClass.ChannelPoint.getDefaultInstance() : chanPoint_;
+              lnrpc.Lnd.ChannelPoint.getDefaultInstance() : chanPoint_;
         }
       }
       /**
        * <code>.lnrpc.ChannelPoint chan_point = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.ChannelPoint, lnrpc.LightningOuterClass.ChannelPoint.Builder, lnrpc.LightningOuterClass.ChannelPointOrBuilder> 
+          lnrpc.Lnd.ChannelPoint, lnrpc.Lnd.ChannelPoint.Builder, lnrpc.Lnd.ChannelPointOrBuilder> 
           getChanPointFieldBuilder() {
         if (chanPointBuilder_ == null) {
           chanPointBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              lnrpc.LightningOuterClass.ChannelPoint, lnrpc.LightningOuterClass.ChannelPoint.Builder, lnrpc.LightningOuterClass.ChannelPointOrBuilder>(
+              lnrpc.Lnd.ChannelPoint, lnrpc.Lnd.ChannelPoint.Builder, lnrpc.Lnd.ChannelPointOrBuilder>(
                   getChanPoint(),
                   getParentForChildren(),
                   isClean());
@@ -36921,7 +36921,7 @@ com.google.protobuf.ByteString defaultValue) {
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          lnrpc.LightningOuterClass.getDescriptor(),
+          lnrpc.Lnd.getDescriptor(),
         });
     internal_static_routerrpc_SendPaymentRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -37181,7 +37181,7 @@ com.google.protobuf.ByteString defaultValue) {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_routerrpc_UpdateChanStatusResponse_descriptor,
         new java.lang.String[] { });
-    lnrpc.LightningOuterClass.getDescriptor();
+    lnrpc.Lnd.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

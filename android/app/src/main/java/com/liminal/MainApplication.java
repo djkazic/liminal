@@ -13,7 +13,7 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 
-import lnrpc.LightningOuterClass;
+import lnrpc.Lnd;
 
 import org.reactnative.camera.RNCameraPackage;
 

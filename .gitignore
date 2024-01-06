@@ -36,3 +36,4 @@ yarn-error.*
 
 *.keystore
 android/app/synthlock.keystore
+android/app/libs/Litdmobile.aar

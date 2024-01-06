@@ -13,10 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import lndmobile.Callback;
-import lndmobile.Lndmobile;
-import lndmobile.RecvStream;
-import lndmobile.SendStream;
+import litdmobile.Callback;
+import litdmobile.Litdmobile;
+import litdmobile.RecvStream;
+import litdmobile.SendStream;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -52,10 +52,10 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 
-import lndmobile.Callback;
+import litdmobile.Callback;
 
 import lnrpc.Walletunlocker;
-import lnrpc.LightningOuterClass;
+import lnrpc.Lnd;
 import lnrpc.Stateservice;
 
 import walletrpc.Walletkit;
@@ -100,7 +100,7 @@ class TrackPaymentsRecvStream implements RecvStream {
                 return;
             }
             if (bytes != null) {
-                LightningOuterClass.Payment response = LightningOuterClass.Payment.parseFrom(bytes);
+                Lnd.Payment response = Lnd.Payment.parseFrom(bytes);
                 if (response.getStatusValue() == 2) {
                     createNotificationChannel();
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(reactContext,
@@ -166,7 +166,7 @@ class InvoiceRecvStream implements RecvStream {
                 return;
             }
             if (bytes != null) {
-                LightningOuterClass.Invoice response = LightningOuterClass.Invoice.parseFrom(bytes);
+                Lnd.Invoice response = Lnd.Invoice.parseFrom(bytes);
                 if (response.getSettled()) {
                     createNotificationChannel();
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(reactContext,
@@ -206,8 +206,8 @@ class PaymentRecvStream implements RecvStream {
     public void onResponse(byte[] bytes) {
         try {
             if (bytes != null) {
-                LightningOuterClass.Payment response = LightningOuterClass.Payment.parseFrom(bytes);
-                LightningOuterClass.Payment.PaymentStatus status = response.getStatus();
+                Lnd.Payment response = Lnd.Payment.parseFrom(bytes);
+                Lnd.Payment.PaymentStatus status = response.getStatus();
 
                 String responseStr = response.getPaymentRequest();
                 Log.i("PaymentRecvStream", "Response received: " + responseStr);
@@ -296,10 +296,10 @@ class OpenChannelRecvStream implements RecvStream {
         try {
             WritableMap resultMap = Arguments.createMap();
             if (bytes != null) {
-                LightningOuterClass.OpenStatusUpdate response = LightningOuterClass.OpenStatusUpdate.parseFrom(bytes);
+                Lnd.OpenStatusUpdate response = Lnd.OpenStatusUpdate.parseFrom(bytes);
                 String pendingChanId = Utils.bytesToHex(response.getPendingChanId().toByteArray());
-                LightningOuterClass.ChannelOpenUpdate chanOpenUpdate = response.getChanOpen();
-                LightningOuterClass.ChannelPoint chanPoint = chanOpenUpdate.getChannelPoint();
+                Lnd.ChannelOpenUpdate chanOpenUpdate = response.getChanOpen();
+                Lnd.ChannelPoint chanPoint = chanOpenUpdate.getChannelPoint();
                 String fundingTxid = chanPoint.getFundingTxidStr();
                 int outputIndex = chanPoint.getOutputIndex();
                 resultMap.putString("pendingChanId", pendingChanId);
@@ -343,9 +343,9 @@ class CloseChannelRecvStream implements RecvStream {
         try {
             WritableMap resultMap = Arguments.createMap();
             if (bytes != null) {
-                LightningOuterClass.CloseStatusUpdate response = LightningOuterClass.CloseStatusUpdate.parseFrom(bytes);
-                LightningOuterClass.PendingUpdate pendingUpdate = response.getClosePending();
-                LightningOuterClass.ChannelCloseUpdate closeUpdate = response.getChanClose();
+                Lnd.CloseStatusUpdate response = Lnd.CloseStatusUpdate.parseFrom(bytes);
+                Lnd.PendingUpdate pendingUpdate = response.getClosePending();
+                Lnd.ChannelCloseUpdate closeUpdate = response.getChanClose();
                 String closingTxid = pendingUpdate.getTxid().toStringUtf8();
                 String outputIndex = String.valueOf(pendingUpdate.getOutputIndex());
                 String channelPoint = closingTxid + ":" + outputIndex;
@@ -415,7 +415,7 @@ public class LndModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void resetMc(Promise promise) {
         RouterOuterClass.ResetMissionControlRequest request = serializeResetMissionControl();
-        Lndmobile.routerResetMissionControl(request.toByteArray(), new lndmobile.Callback() {
+        Litdmobile.routerResetMissionControl(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_RESET_MISSION_CONTROL", e);
@@ -439,8 +439,8 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getNetworkInfo(Promise promise) {
-        LightningOuterClass.NetworkInfoRequest request = serializeGetNetworkInfo();
-        Lndmobile.getNetworkInfo(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.NetworkInfoRequest request = serializeGetNetworkInfo();
+        Litdmobile.getNetworkInfo(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_GET_NETWORK_INFO", e);
@@ -450,7 +450,7 @@ public class LndModule extends ReactContextBaseJavaModule {
             public void onResponse(byte[] bytes) {
                 Log.i("LND", "getnetworkinfo");
                 try {
-                    LightningOuterClass.NetworkInfo response = LightningOuterClass.NetworkInfo.parseFrom(bytes);
+                    Lnd.NetworkInfo response = Lnd.NetworkInfo.parseFrom(bytes);
                     WritableMap resultMap = Arguments.createMap();
                     resultMap.putDouble("numNodes", response.getNumNodes());
                     resultMap.putDouble("numChannels", response.getNumChannels());
@@ -466,7 +466,7 @@ public class LndModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getStatus(Promise promise) {
         Stateservice.GetStateRequest request = serializeGetStatus();
-        Lndmobile.getState(request.toByteArray(), new lndmobile.Callback() {
+        Litdmobile.getState(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_GET_STATUS", e);
@@ -525,8 +525,8 @@ public class LndModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void newAddress(Promise promise) {
         Log.i("LND", "newaddress");
-        LightningOuterClass.NewAddressRequest request = serializeNewAddress();
-        Lndmobile.newAddress(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.NewAddressRequest request = serializeNewAddress();
+        Litdmobile.newAddress(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 Log.e("LND", "Error newaddress", e);
@@ -538,7 +538,7 @@ public class LndModule extends ReactContextBaseJavaModule {
             public void onResponse(byte[] bytes) {
                 try {
                     if (bytes != null) {
-                        LightningOuterClass.NewAddressResponse response = LightningOuterClass.NewAddressResponse
+                        Lnd.NewAddressResponse response = Lnd.NewAddressResponse
                                 .parseFrom(bytes);
                         promise.resolve(response.getAddress());
                     }
@@ -552,8 +552,8 @@ public class LndModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void sendCoins(String address, double amount, double feeRate, Promise promise) {
         Log.i("LND", "sendcoins");
-        LightningOuterClass.SendCoinsRequest request = serializeSendCoins(address, (long) amount, (long) feeRate);
-        Lndmobile.sendCoins(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.SendCoinsRequest request = serializeSendCoins(address, (long) amount, (long) feeRate);
+        Litdmobile.sendCoins(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 Log.e("LND", "Error sendcoins", e);
@@ -565,7 +565,7 @@ public class LndModule extends ReactContextBaseJavaModule {
             public void onResponse(byte[] bytes) {
                 try {
                     if (bytes != null) {
-                        LightningOuterClass.SendCoinsResponse response = LightningOuterClass.SendCoinsResponse
+                        Lnd.SendCoinsResponse response = Lnd.SendCoinsResponse
                                 .parseFrom(bytes);
                         promise.resolve(response.getTxid());
                     }
@@ -580,17 +580,17 @@ public class LndModule extends ReactContextBaseJavaModule {
     public void openChannel(String connectionURI, double localAmount, double feeRate, boolean announce,
             Promise promise) {
         Log.i("LND", "openchannel");
-        LightningOuterClass.OpenChannelRequest request = serializeOpenChannel(connectionURI, (long) localAmount,
+        Lnd.OpenChannelRequest request = serializeOpenChannel(connectionURI, (long) localAmount,
                 (long) feeRate, announce);
-        Lndmobile.openChannel(request.toByteArray(), new OpenChannelRecvStream(promise, reactContext));
+        Litdmobile.openChannel(request.toByteArray(), new OpenChannelRecvStream(promise, reactContext));
     }
 
     @ReactMethod
     public void closeChannel(String channelPoint, boolean force, double feeRate,
             Promise promise) {
         Log.i("LND", "closechannel");
-        LightningOuterClass.CloseChannelRequest request = serializeCloseChannel(channelPoint, force, (long) feeRate);
-        Lndmobile.closeChannel(request.toByteArray(), new CloseChannelRecvStream(promise, reactContext));
+        Lnd.CloseChannelRequest request = serializeCloseChannel(channelPoint, force, (long) feeRate);
+        Litdmobile.closeChannel(request.toByteArray(), new CloseChannelRecvStream(promise, reactContext));
     }
 
     @ReactMethod
@@ -629,8 +629,8 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getInfo(Promise promise) {
-        LightningOuterClass.GetInfoRequest request = serializeGetInfo();
-        Lndmobile.getInfo(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.GetInfoRequest request = serializeGetInfo();
+        Litdmobile.getInfo(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 Log.e("LND", "Error getinfo", e);
@@ -643,7 +643,7 @@ public class LndModule extends ReactContextBaseJavaModule {
                 WritableMap resultMap = Arguments.createMap();
                 try {
                     if (bytes != null) {
-                        LightningOuterClass.GetInfoResponse response = LightningOuterClass.GetInfoResponse
+                        Lnd.GetInfoResponse response = Lnd.GetInfoResponse
                                 .parseFrom(bytes);
                         resultMap.putBoolean("syncedChain", response.getSyncedToChain());
                         resultMap.putBoolean("syncedGraph", response.getSyncedToGraph());
@@ -663,7 +663,7 @@ public class LndModule extends ReactContextBaseJavaModule {
     public void genSeed(Promise promise) {
         try {
             Walletunlocker.GenSeedRequest request = serializeGenSeed();
-            Lndmobile.genSeed(request.toByteArray(), new lndmobile.Callback() {
+            Litdmobile.genSeed(request.toByteArray(), new litdmobile.Callback() {
                 @Override
                 public void onError(Exception e) {
                     Log.e("LND", "Error genseed", e);
@@ -696,7 +696,7 @@ public class LndModule extends ReactContextBaseJavaModule {
             return;
         }
         Walletunlocker.InitWalletRequest request = serializeInitWallet(seed, recovery, channelBackups);
-        Lndmobile.initWallet(request.toByteArray(), new lndmobile.Callback() {
+        Litdmobile.initWallet(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_INIT_WALLET", e);
@@ -720,8 +720,8 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getRecoveryInfo(Promise promise) {
-        LightningOuterClass.GetRecoveryInfoRequest request = serializeGetRecoveryInfo();
-        Lndmobile.getRecoveryInfo(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.GetRecoveryInfoRequest request = serializeGetRecoveryInfo();
+        Litdmobile.getRecoveryInfo(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_GET_RECOVERY_INFO", e);
@@ -739,7 +739,7 @@ public class LndModule extends ReactContextBaseJavaModule {
                     return;
                 }
                 try {
-                    LightningOuterClass.GetRecoveryInfoResponse response = LightningOuterClass.GetRecoveryInfoResponse
+                    Lnd.GetRecoveryInfoResponse response = Lnd.GetRecoveryInfoResponse
                             .parseFrom(bytes);
                     WritableMap resultMap = Arguments.createMap();
                     resultMap.putBoolean("recoveryMode", response.getRecoveryMode());
@@ -759,8 +759,8 @@ public class LndModule extends ReactContextBaseJavaModule {
         try {
             long longAmount = Long.parseLong(amount);
             long longExpiration = Long.parseLong(expiration);
-            LightningOuterClass.Invoice request = serializeAddInvoice(memo, longAmount, longExpiration);
-            Lndmobile.addInvoice(request.toByteArray(), new lndmobile.Callback() {
+            Lnd.Invoice request = serializeAddInvoice(memo, longAmount, longExpiration);
+            Litdmobile.addInvoice(request.toByteArray(), new litdmobile.Callback() {
                 @Override
                 public void onError(Exception e) {
                     promise.reject("ERR_ADD_INVOICE", e);
@@ -770,7 +770,7 @@ public class LndModule extends ReactContextBaseJavaModule {
                 @Override
                 public void onResponse(byte[] bytes) {
                     try {
-                        LightningOuterClass.AddInvoiceResponse response = LightningOuterClass.AddInvoiceResponse
+                        Lnd.AddInvoiceResponse response = Lnd.AddInvoiceResponse
                                 .parseFrom(bytes);
                         String paymentRequest = response.getPaymentRequest();
                         promise.resolve(paymentRequest);
@@ -787,9 +787,9 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void sendPayment(String paymentRequest, Promise promise) {
-        CompletableFuture<LightningOuterClass.PayReq> future = new CompletableFuture<>();
-        LightningOuterClass.PayReqString decodeRequest = serializeDecodeInvoice(paymentRequest);
-        Lndmobile.decodePayReq(decodeRequest.toByteArray(), new lndmobile.Callback() {
+        CompletableFuture<Lnd.PayReq> future = new CompletableFuture<>();
+        Lnd.PayReqString decodeRequest = serializeDecodeInvoice(paymentRequest);
+        Litdmobile.decodePayReq(decodeRequest.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 future.completeExceptionally(e);
@@ -798,7 +798,7 @@ public class LndModule extends ReactContextBaseJavaModule {
             @Override
             public void onResponse(byte[] bytes) {
                 try {
-                    LightningOuterClass.PayReq response = LightningOuterClass.PayReq.parseFrom(bytes);
+                    Lnd.PayReq response = Lnd.PayReq.parseFrom(bytes);
                     future.complete(response);
                 } catch (InvalidProtocolBufferException e) {
                     future.completeExceptionally(e);
@@ -806,10 +806,10 @@ public class LndModule extends ReactContextBaseJavaModule {
             }
         });
         try {
-            LightningOuterClass.PayReq decodeResponse = future.get();
+            Lnd.PayReq decodeResponse = future.get();
             RouterOuterClass.SendPaymentRequest request = serializeSendPayment(paymentRequest,
                     decodeResponse.getNumSatoshis());
-            Lndmobile.routerSendPaymentV2(request.toByteArray(), new PaymentRecvStream(promise, reactContext));
+            Litdmobile.routerSendPaymentV2(request.toByteArray(), new PaymentRecvStream(promise, reactContext));
         } catch (Exception e) {
             promise.reject("ERR_DECODE_PAYREQ", e);
             return;
@@ -818,8 +818,8 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void decodeInvoice(String paymentRequest, Promise promise) {
-        LightningOuterClass.PayReqString request = serializeDecodeInvoice(paymentRequest);
-        Lndmobile.decodePayReq(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.PayReqString request = serializeDecodeInvoice(paymentRequest);
+        Litdmobile.decodePayReq(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_DECODE_PAYREQ", e);
@@ -829,7 +829,7 @@ public class LndModule extends ReactContextBaseJavaModule {
             @Override
             public void onResponse(byte[] bytes) {
                 try {
-                    LightningOuterClass.PayReq response = LightningOuterClass.PayReq.parseFrom(bytes);
+                    Lnd.PayReq response = Lnd.PayReq.parseFrom(bytes);
                     WritableMap resultMap = Arguments.createMap();
                     resultMap.putString("amount", Long.toString(response.getNumSatoshis()));
                     resultMap.putString("memo", response.getDescription());
@@ -844,7 +844,7 @@ public class LndModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void listUnspent(Promise promise) {
         Walletkit.ListUnspentRequest request = serializeListUnspent();
-        Lndmobile.walletKitListUnspent(request.toByteArray(), new lndmobile.Callback() {
+        Litdmobile.walletKitListUnspent(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_LIST_UNSPENT", e);
@@ -859,7 +859,7 @@ public class LndModule extends ReactContextBaseJavaModule {
                     if (bytes != null) {
                         Walletkit.ListUnspentResponse response = Walletkit.ListUnspentResponse.parseFrom(bytes);
                         Log.i("LND", "UTXO count: " + response.getUtxosList().size());
-                        for (LightningOuterClass.Utxo utxo : response.getUtxosList()) {
+                        for (Lnd.Utxo utxo : response.getUtxosList()) {
                             WritableMap utxoMap = Arguments.createMap();
                             Log.i("LND", "Found utxo " + utxo.getAddress());
                             utxoMap.putString("address", utxo.getAddress());
@@ -881,8 +881,8 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void listChannels(Promise promise) {
-        LightningOuterClass.ListChannelsRequest request = serializeListChannels();
-        Lndmobile.listChannels(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.ListChannelsRequest request = serializeListChannels();
+        Litdmobile.listChannels(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_LIST_CHANNELS", e);
@@ -894,9 +894,9 @@ public class LndModule extends ReactContextBaseJavaModule {
                 try {
                     WritableArray channelsArray = Arguments.createArray();
                     if (bytes != null) {
-                        LightningOuterClass.ListChannelsResponse response = LightningOuterClass.ListChannelsResponse
+                        Lnd.ListChannelsResponse response = Lnd.ListChannelsResponse
                                 .parseFrom(bytes);
-                        for (LightningOuterClass.Channel channel : response.getChannelsList()) {
+                        for (Lnd.Channel channel : response.getChannelsList()) {
                             WritableMap channelMap = Arguments.createMap();
                             channelMap.putBoolean("active", channel.getActive());
                             channelMap.putBoolean("private", channel.getPrivate());
@@ -924,8 +924,8 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void listPayments(Promise promise) {
-        LightningOuterClass.ListPaymentsRequest request = serializeListPayments();
-        Lndmobile.listPayments(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.ListPaymentsRequest request = serializeListPayments();
+        Litdmobile.listPayments(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_LIST_PAYMENTS", e);
@@ -940,16 +940,16 @@ public class LndModule extends ReactContextBaseJavaModule {
                         promise.resolve(paymentsArray);
                         return;
                     }
-                    LightningOuterClass.ListPaymentsResponse response = LightningOuterClass.ListPaymentsResponse
+                    Lnd.ListPaymentsResponse response = Lnd.ListPaymentsResponse
                             .parseFrom(bytes);
-                    for (LightningOuterClass.Payment payment : response.getPaymentsList()) {
+                    for (Lnd.Payment payment : response.getPaymentsList()) {
                         WritableMap paymentMap = Arguments.createMap();
                         paymentMap.putString("type", "payment");
                         paymentMap.putString("pr", payment.getPaymentRequest());
                         paymentMap.putDouble("creationDate", payment.getCreationDate());
-                        CompletableFuture<LightningOuterClass.PayReq> future = new CompletableFuture<>();
-                        LightningOuterClass.PayReqString request = serializeDecodeInvoice(payment.getPaymentRequest());
-                        Lndmobile.decodePayReq(request.toByteArray(), new lndmobile.Callback() {
+                        CompletableFuture<Lnd.PayReq> future = new CompletableFuture<>();
+                        Lnd.PayReqString request = serializeDecodeInvoice(payment.getPaymentRequest());
+                        Litdmobile.decodePayReq(request.toByteArray(), new litdmobile.Callback() {
                             @Override
                             public void onError(Exception e) {
                                 future.completeExceptionally(e);
@@ -958,7 +958,7 @@ public class LndModule extends ReactContextBaseJavaModule {
                             @Override
                             public void onResponse(byte[] bytes) {
                                 try {
-                                    LightningOuterClass.PayReq response = LightningOuterClass.PayReq.parseFrom(bytes);
+                                    Lnd.PayReq response = Lnd.PayReq.parseFrom(bytes);
                                     future.complete(response);
                                 } catch (InvalidProtocolBufferException e) {
                                     future.completeExceptionally(e);
@@ -967,7 +967,7 @@ public class LndModule extends ReactContextBaseJavaModule {
                         });
                         try {
                             // Block and wait for decode
-                            LightningOuterClass.PayReq decodedResponse = future.get();
+                            Lnd.PayReq decodedResponse = future.get();
                             paymentMap.putString("memo", decodedResponse.getDescription());
                             paymentMap.putString("id", payment.getPaymentHash());
                             paymentMap.putString("paymentPreimage", payment.getPaymentPreimage());
@@ -989,8 +989,8 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getTransactions(Promise promise) {
-        LightningOuterClass.GetTransactionsRequest request = serializeGetTransactions();
-        Lndmobile.getTransactions(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.GetTransactionsRequest request = serializeGetTransactions();
+        Litdmobile.getTransactions(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_GET_TRANSACTIONS", e);
@@ -1006,9 +1006,9 @@ public class LndModule extends ReactContextBaseJavaModule {
                         promise.resolve(transactionsArray);
                         return;
                     }
-                    LightningOuterClass.TransactionDetails response = LightningOuterClass.TransactionDetails
+                    Lnd.TransactionDetails response = Lnd.TransactionDetails
                             .parseFrom(bytes);
-                    for (LightningOuterClass.Transaction tx : response.getTransactionsList()) {
+                    for (Lnd.Transaction tx : response.getTransactionsList()) {
                         WritableMap txMap = Arguments.createMap();
                         txMap.putString("id", tx.getTxHash());
                         txMap.putDouble("value", tx.getAmount());
@@ -1030,8 +1030,8 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void listInvoices(Promise promise) {
-        LightningOuterClass.ListInvoiceRequest request = serializeListInvoices();
-        Lndmobile.listInvoices(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.ListInvoiceRequest request = serializeListInvoices();
+        Litdmobile.listInvoices(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_LIST_INVOICES", e);
@@ -1044,9 +1044,9 @@ public class LndModule extends ReactContextBaseJavaModule {
                 try {
                     WritableArray invoicesArray = Arguments.createArray();
                     if (bytes != null) {
-                        LightningOuterClass.ListInvoiceResponse response = LightningOuterClass.ListInvoiceResponse
+                        Lnd.ListInvoiceResponse response = Lnd.ListInvoiceResponse
                                 .parseFrom(bytes);
-                        for (LightningOuterClass.Invoice inv : response.getInvoicesList()) {
+                        for (Lnd.Invoice inv : response.getInvoicesList()) {
                             WritableMap invoiceMap = Arguments.createMap();
                             String paymentRequest = inv.getPaymentRequest();
                             ByteString rHashByteString = inv.getRHash();
@@ -1073,8 +1073,8 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getLightningBalance(Promise promise) {
-        LightningOuterClass.ChannelBalanceRequest request = serializeGetLightningBalance();
-        Lndmobile.channelBalance(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.ChannelBalanceRequest request = serializeGetLightningBalance();
+        Litdmobile.channelBalance(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_CHANNEL_BALANCE");
@@ -1086,13 +1086,13 @@ public class LndModule extends ReactContextBaseJavaModule {
                 // Log.i("LND", "channelbalance");
                 try {
                     if (bytes != null) {
-                        LightningOuterClass.ChannelBalanceResponse response = LightningOuterClass.ChannelBalanceResponse
+                        Lnd.ChannelBalanceResponse response = Lnd.ChannelBalanceResponse
                                 .parseFrom(bytes);
                         if (response == null) {
                             promise.resolve("0");
                             return;
                         }
-                        LightningOuterClass.Amount balance = response.getLocalBalance();
+                        Lnd.Amount balance = response.getLocalBalance();
                         promise.resolve(Long.toString(balance.getSat()));
                     } else {
                         promise.resolve("0");
@@ -1106,8 +1106,8 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getOnchainBalance(Promise promise) {
-        LightningOuterClass.WalletBalanceRequest request = serializeGetOnchainBalance();
-        Lndmobile.walletBalance(request.toByteArray(), new lndmobile.Callback() {
+        Lnd.WalletBalanceRequest request = serializeGetOnchainBalance();
+        Litdmobile.walletBalance(request.toByteArray(), new litdmobile.Callback() {
             @Override
             public void onError(Exception e) {
                 promise.reject("ERR_ONCHAINL_BALANCE");
@@ -1119,7 +1119,7 @@ public class LndModule extends ReactContextBaseJavaModule {
                 // Log.i("LND", "walletbalance");
                 try {
                     if (bytes != null) {
-                        LightningOuterClass.WalletBalanceResponse response = LightningOuterClass.WalletBalanceResponse
+                        Lnd.WalletBalanceResponse response = Lnd.WalletBalanceResponse
                                 .parseFrom(bytes);
                         if (response == null) {
                             promise.resolve("0");
@@ -1144,8 +1144,8 @@ public class LndModule extends ReactContextBaseJavaModule {
         if (uriParts.length == 2) {
             String[] hostParts = uriParts[1].split(":");
             if (hostParts.length == 2) {
-                LightningOuterClass.ConnectPeerRequest request = serializeConnectPeer(uriParts[0], uriParts[1]);
-                Lndmobile.connectPeer(request.toByteArray(), new lndmobile.Callback() {
+                Lnd.ConnectPeerRequest request = serializeConnectPeer(uriParts[0], uriParts[1]);
+                Litdmobile.connectPeer(request.toByteArray(), new litdmobile.Callback() {
                     @Override
                     public void onError(Exception e) {
                         promise.reject("ERR_CONNECT_PEER", e);
@@ -1184,9 +1184,9 @@ public class LndModule extends ReactContextBaseJavaModule {
         return RouterOuterClass.ResetMissionControlRequest.newBuilder().build();
     }
 
-    private LightningOuterClass.OpenChannelRequest serializeOpenChannel(String connectionURI, long localAmount,
+    private Lnd.OpenChannelRequest serializeOpenChannel(String connectionURI, long localAmount,
             long feeRate, boolean announce) {
-        LightningOuterClass.OpenChannelRequest.Builder builder = LightningOuterClass.OpenChannelRequest.newBuilder();
+        Lnd.OpenChannelRequest.Builder builder = Lnd.OpenChannelRequest.newBuilder();
         String[] uriParts = connectionURI.split("@");
         if (uriParts.length == 2) {
             String pubkey = uriParts[0];
@@ -1209,12 +1209,12 @@ public class LndModule extends ReactContextBaseJavaModule {
         return builder.build();
     }
 
-    private LightningOuterClass.CloseChannelRequest serializeCloseChannel(String channelPoint, boolean force,
+    private Lnd.CloseChannelRequest serializeCloseChannel(String channelPoint, boolean force,
             long feeRate) {
-        LightningOuterClass.CloseChannelRequest.Builder builder = LightningOuterClass.CloseChannelRequest.newBuilder();
+        Lnd.CloseChannelRequest.Builder builder = Lnd.CloseChannelRequest.newBuilder();
         String[] channelPointParts = channelPoint.split(":");
         if (channelPointParts.length == 2) {
-            LightningOuterClass.ChannelPoint.Builder chanPointBuilder = LightningOuterClass.ChannelPoint.newBuilder();
+            Lnd.ChannelPoint.Builder chanPointBuilder = Lnd.ChannelPoint.newBuilder();
             chanPointBuilder.setFundingTxidStr(channelPointParts[0]);
             try {
                 chanPointBuilder.setOutputIndex(Integer.parseInt(channelPointParts[1]));
@@ -1232,46 +1232,46 @@ public class LndModule extends ReactContextBaseJavaModule {
         return builder.build();
     }
 
-    private LightningOuterClass.NewAddressRequest serializeNewAddress() {
-        // LightningOuterClass.AddressType addrType = serializeAddressType();
-        LightningOuterClass.NewAddressRequest.Builder builder = LightningOuterClass.NewAddressRequest.newBuilder();
+    private Lnd.NewAddressRequest serializeNewAddress() {
+        // Lnd.AddressType addrType = serializeAddressType();
+        Lnd.NewAddressRequest.Builder builder = Lnd.NewAddressRequest.newBuilder();
         builder.setTypeValue(4); // p2tr
         return builder.build();
     }
 
-    private LightningOuterClass.ConnectPeerRequest serializeConnectPeer(String pubkey, String host) {
-        LightningOuterClass.LightningAddress addr = serializeLightningAddress(pubkey, host);
+    private Lnd.ConnectPeerRequest serializeConnectPeer(String pubkey, String host) {
+        Lnd.LightningAddress addr = serializeLightningAddress(pubkey, host);
         return serializeConnectPeer(addr);
     }
 
-    private LightningOuterClass.LightningAddress serializeLightningAddress(String pubkey, String host) {
-        LightningOuterClass.LightningAddress.Builder builder = LightningOuterClass.LightningAddress.newBuilder();
+    private Lnd.LightningAddress serializeLightningAddress(String pubkey, String host) {
+        Lnd.LightningAddress.Builder builder = Lnd.LightningAddress.newBuilder();
         builder.setPubkey(pubkey);
         builder.setHost(host);
         return builder.build();
     }
 
-    private LightningOuterClass.ConnectPeerRequest serializeConnectPeer(LightningOuterClass.LightningAddress addr) {
-        LightningOuterClass.ConnectPeerRequest.Builder builder = LightningOuterClass.ConnectPeerRequest.newBuilder();
+    private Lnd.ConnectPeerRequest serializeConnectPeer(Lnd.LightningAddress addr) {
+        Lnd.ConnectPeerRequest.Builder builder = Lnd.ConnectPeerRequest.newBuilder();
         builder.setAddr(addr);
         builder.setTimeout(60);
         return builder.build();
     }
 
-    private LightningOuterClass.SendCoinsRequest serializeSendCoins(String address, long amount, long feeRate) {
-        LightningOuterClass.SendCoinsRequest.Builder builder = LightningOuterClass.SendCoinsRequest.newBuilder();
+    private Lnd.SendCoinsRequest serializeSendCoins(String address, long amount, long feeRate) {
+        Lnd.SendCoinsRequest.Builder builder = Lnd.SendCoinsRequest.newBuilder();
         builder.setAddr(address);
         builder.setAmount(amount);
         builder.setSatPerVbyte(feeRate);
         return builder.build();
     }
 
-    private LightningOuterClass.GetInfoRequest serializeGetInfo() {
-        return LightningOuterClass.GetInfoRequest.newBuilder().build();
+    private Lnd.GetInfoRequest serializeGetInfo() {
+        return Lnd.GetInfoRequest.newBuilder().build();
     }
 
-    private LightningOuterClass.GetRecoveryInfoRequest serializeGetRecoveryInfo() {
-        return LightningOuterClass.GetRecoveryInfoRequest.newBuilder().build();
+    private Lnd.GetRecoveryInfoRequest serializeGetRecoveryInfo() {
+        return Lnd.GetRecoveryInfoRequest.newBuilder().build();
     }
 
     private Walletunlocker.GenSeedRequest serializeGenSeed() {
@@ -1287,11 +1287,11 @@ public class LndModule extends ReactContextBaseJavaModule {
         }
         if (recovery && channelBackups != "") {
             builder.setRecoveryWindow(2500);
-            LightningOuterClass.MultiChanBackup.Builder chanBackupBuilder = LightningOuterClass.MultiChanBackup
+            Lnd.MultiChanBackup.Builder chanBackupBuilder = Lnd.MultiChanBackup
                     .newBuilder();
             byte[] decodedBytes = Base64.getDecoder().decode(channelBackups);
             chanBackupBuilder.setMultiChanBackup(ByteString.copyFrom(decodedBytes));
-            LightningOuterClass.ChanBackupSnapshot.Builder snapshotBuilder = LightningOuterClass.ChanBackupSnapshot
+            Lnd.ChanBackupSnapshot.Builder snapshotBuilder = Lnd.ChanBackupSnapshot
                     .newBuilder();
             snapshotBuilder.setMultiChanBackup(chanBackupBuilder.build());
             builder.setChannelBackups(snapshotBuilder.build());
@@ -1299,8 +1299,8 @@ public class LndModule extends ReactContextBaseJavaModule {
         return builder.build();
     }
 
-    private LightningOuterClass.Invoice serializeAddInvoice(String memo, long amount, long expiration) {
-        LightningOuterClass.Invoice.Builder builder = LightningOuterClass.Invoice.newBuilder();
+    private Lnd.Invoice serializeAddInvoice(String memo, long amount, long expiration) {
+        Lnd.Invoice.Builder builder = Lnd.Invoice.newBuilder();
         builder.setMemo(memo);
         builder.setValue(amount);
         builder.setExpiry(expiration);
@@ -1319,8 +1319,8 @@ public class LndModule extends ReactContextBaseJavaModule {
         return builder.build();
     }
 
-    private LightningOuterClass.PayReqString serializeDecodeInvoice(String paymentRequest) {
-        LightningOuterClass.PayReqString.Builder builder = LightningOuterClass.PayReqString.newBuilder();
+    private Lnd.PayReqString serializeDecodeInvoice(String paymentRequest) {
+        Lnd.PayReqString.Builder builder = Lnd.PayReqString.newBuilder();
         builder.setPayReq(paymentRequest);
         return builder.build();
     }
@@ -1334,31 +1334,31 @@ public class LndModule extends ReactContextBaseJavaModule {
         return builder.build();
     }
 
-    private LightningOuterClass.NetworkInfoRequest serializeGetNetworkInfo() {
-        return LightningOuterClass.NetworkInfoRequest.newBuilder().build();
+    private Lnd.NetworkInfoRequest serializeGetNetworkInfo() {
+        return Lnd.NetworkInfoRequest.newBuilder().build();
     }
 
-    private LightningOuterClass.ListChannelsRequest serializeListChannels() {
-        return LightningOuterClass.ListChannelsRequest.newBuilder().build();
+    private Lnd.ListChannelsRequest serializeListChannels() {
+        return Lnd.ListChannelsRequest.newBuilder().build();
     }
 
-    private LightningOuterClass.ListPaymentsRequest serializeListPayments() {
-        return LightningOuterClass.ListPaymentsRequest.newBuilder().build();
+    private Lnd.ListPaymentsRequest serializeListPayments() {
+        return Lnd.ListPaymentsRequest.newBuilder().build();
     }
 
-    private LightningOuterClass.GetTransactionsRequest serializeGetTransactions() {
-        return LightningOuterClass.GetTransactionsRequest.newBuilder().build();
+    private Lnd.GetTransactionsRequest serializeGetTransactions() {
+        return Lnd.GetTransactionsRequest.newBuilder().build();
     }
 
-    private LightningOuterClass.ListInvoiceRequest serializeListInvoices() {
-        return LightningOuterClass.ListInvoiceRequest.newBuilder().build();
+    private Lnd.ListInvoiceRequest serializeListInvoices() {
+        return Lnd.ListInvoiceRequest.newBuilder().build();
     }
 
-    private LightningOuterClass.ChannelBalanceRequest serializeGetLightningBalance() {
-        return LightningOuterClass.ChannelBalanceRequest.newBuilder().build();
+    private Lnd.ChannelBalanceRequest serializeGetLightningBalance() {
+        return Lnd.ChannelBalanceRequest.newBuilder().build();
     }
 
-    private LightningOuterClass.WalletBalanceRequest serializeGetOnchainBalance() {
-        return LightningOuterClass.WalletBalanceRequest.newBuilder().build();
+    private Lnd.WalletBalanceRequest serializeGetOnchainBalance() {
+        return Lnd.WalletBalanceRequest.newBuilder().build();
     }
 }

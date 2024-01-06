@@ -1636,7 +1636,7 @@ public final class Walletunlocker {
      * <code>.lnrpc.ChanBackupSnapshot channel_backups = 5;</code>
      * @return The channelBackups.
      */
-    lnrpc.LightningOuterClass.ChanBackupSnapshot getChannelBackups();
+    lnrpc.Lnd.ChanBackupSnapshot getChannelBackups();
     /**
      * <pre>
      *
@@ -1650,7 +1650,7 @@ public final class Walletunlocker {
      *
      * <code>.lnrpc.ChanBackupSnapshot channel_backups = 5;</code>
      */
-    lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder();
+    lnrpc.Lnd.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder();
 
     /**
      * <pre>
@@ -1947,7 +1947,7 @@ public final class Walletunlocker {
     }
 
     public static final int CHANNEL_BACKUPS_FIELD_NUMBER = 5;
-    private lnrpc.LightningOuterClass.ChanBackupSnapshot channelBackups_;
+    private lnrpc.Lnd.ChanBackupSnapshot channelBackups_;
     /**
      * <pre>
      *
@@ -1981,8 +1981,8 @@ public final class Walletunlocker {
      * @return The channelBackups.
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.ChanBackupSnapshot getChannelBackups() {
-      return channelBackups_ == null ? lnrpc.LightningOuterClass.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
+    public lnrpc.Lnd.ChanBackupSnapshot getChannelBackups() {
+      return channelBackups_ == null ? lnrpc.Lnd.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
     }
     /**
      * <pre>
@@ -1998,8 +1998,8 @@ public final class Walletunlocker {
      * <code>.lnrpc.ChanBackupSnapshot channel_backups = 5;</code>
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder() {
-      return channelBackups_ == null ? lnrpc.LightningOuterClass.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
+    public lnrpc.Lnd.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder() {
+      return channelBackups_ == null ? lnrpc.Lnd.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
     }
 
     public static final int STATELESS_INIT_FIELD_NUMBER = 6;
@@ -3115,9 +3115,9 @@ public final class Walletunlocker {
         return this;
       }
 
-      private lnrpc.LightningOuterClass.ChanBackupSnapshot channelBackups_;
+      private lnrpc.Lnd.ChanBackupSnapshot channelBackups_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.ChanBackupSnapshot, lnrpc.LightningOuterClass.ChanBackupSnapshot.Builder, lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder> channelBackupsBuilder_;
+          lnrpc.Lnd.ChanBackupSnapshot, lnrpc.Lnd.ChanBackupSnapshot.Builder, lnrpc.Lnd.ChanBackupSnapshotOrBuilder> channelBackupsBuilder_;
       /**
        * <pre>
        *
@@ -3149,9 +3149,9 @@ public final class Walletunlocker {
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 5;</code>
        * @return The channelBackups.
        */
-      public lnrpc.LightningOuterClass.ChanBackupSnapshot getChannelBackups() {
+      public lnrpc.Lnd.ChanBackupSnapshot getChannelBackups() {
         if (channelBackupsBuilder_ == null) {
-          return channelBackups_ == null ? lnrpc.LightningOuterClass.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
+          return channelBackups_ == null ? lnrpc.Lnd.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
         } else {
           return channelBackupsBuilder_.getMessage();
         }
@@ -3169,7 +3169,7 @@ public final class Walletunlocker {
        *
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 5;</code>
        */
-      public Builder setChannelBackups(lnrpc.LightningOuterClass.ChanBackupSnapshot value) {
+      public Builder setChannelBackups(lnrpc.Lnd.ChanBackupSnapshot value) {
         if (channelBackupsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3196,7 +3196,7 @@ public final class Walletunlocker {
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 5;</code>
        */
       public Builder setChannelBackups(
-          lnrpc.LightningOuterClass.ChanBackupSnapshot.Builder builderForValue) {
+          lnrpc.Lnd.ChanBackupSnapshot.Builder builderForValue) {
         if (channelBackupsBuilder_ == null) {
           channelBackups_ = builderForValue.build();
         } else {
@@ -3219,11 +3219,11 @@ public final class Walletunlocker {
        *
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 5;</code>
        */
-      public Builder mergeChannelBackups(lnrpc.LightningOuterClass.ChanBackupSnapshot value) {
+      public Builder mergeChannelBackups(lnrpc.Lnd.ChanBackupSnapshot value) {
         if (channelBackupsBuilder_ == null) {
           if (((bitField0_ & 0x00000010) != 0) &&
             channelBackups_ != null &&
-            channelBackups_ != lnrpc.LightningOuterClass.ChanBackupSnapshot.getDefaultInstance()) {
+            channelBackups_ != lnrpc.Lnd.ChanBackupSnapshot.getDefaultInstance()) {
             getChannelBackupsBuilder().mergeFrom(value);
           } else {
             channelBackups_ = value;
@@ -3273,7 +3273,7 @@ public final class Walletunlocker {
        *
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 5;</code>
        */
-      public lnrpc.LightningOuterClass.ChanBackupSnapshot.Builder getChannelBackupsBuilder() {
+      public lnrpc.Lnd.ChanBackupSnapshot.Builder getChannelBackupsBuilder() {
         bitField0_ |= 0x00000010;
         onChanged();
         return getChannelBackupsFieldBuilder().getBuilder();
@@ -3291,12 +3291,12 @@ public final class Walletunlocker {
        *
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 5;</code>
        */
-      public lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder() {
+      public lnrpc.Lnd.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder() {
         if (channelBackupsBuilder_ != null) {
           return channelBackupsBuilder_.getMessageOrBuilder();
         } else {
           return channelBackups_ == null ?
-              lnrpc.LightningOuterClass.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
+              lnrpc.Lnd.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
         }
       }
       /**
@@ -3313,11 +3313,11 @@ public final class Walletunlocker {
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.ChanBackupSnapshot, lnrpc.LightningOuterClass.ChanBackupSnapshot.Builder, lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder> 
+          lnrpc.Lnd.ChanBackupSnapshot, lnrpc.Lnd.ChanBackupSnapshot.Builder, lnrpc.Lnd.ChanBackupSnapshotOrBuilder> 
           getChannelBackupsFieldBuilder() {
         if (channelBackupsBuilder_ == null) {
           channelBackupsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              lnrpc.LightningOuterClass.ChanBackupSnapshot, lnrpc.LightningOuterClass.ChanBackupSnapshot.Builder, lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder>(
+              lnrpc.Lnd.ChanBackupSnapshot, lnrpc.Lnd.ChanBackupSnapshot.Builder, lnrpc.Lnd.ChanBackupSnapshotOrBuilder>(
                   getChannelBackups(),
                   getParentForChildren(),
                   isClean());
@@ -6688,7 +6688,7 @@ public final class Walletunlocker {
      * <code>.lnrpc.ChanBackupSnapshot channel_backups = 3;</code>
      * @return The channelBackups.
      */
-    lnrpc.LightningOuterClass.ChanBackupSnapshot getChannelBackups();
+    lnrpc.Lnd.ChanBackupSnapshot getChannelBackups();
     /**
      * <pre>
      *
@@ -6702,7 +6702,7 @@ public final class Walletunlocker {
      *
      * <code>.lnrpc.ChanBackupSnapshot channel_backups = 3;</code>
      */
-    lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder();
+    lnrpc.Lnd.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder();
 
     /**
      * <pre>
@@ -6792,7 +6792,7 @@ public final class Walletunlocker {
     }
 
     public static final int CHANNEL_BACKUPS_FIELD_NUMBER = 3;
-    private lnrpc.LightningOuterClass.ChanBackupSnapshot channelBackups_;
+    private lnrpc.Lnd.ChanBackupSnapshot channelBackups_;
     /**
      * <pre>
      *
@@ -6826,8 +6826,8 @@ public final class Walletunlocker {
      * @return The channelBackups.
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.ChanBackupSnapshot getChannelBackups() {
-      return channelBackups_ == null ? lnrpc.LightningOuterClass.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
+    public lnrpc.Lnd.ChanBackupSnapshot getChannelBackups() {
+      return channelBackups_ == null ? lnrpc.Lnd.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
     }
     /**
      * <pre>
@@ -6843,8 +6843,8 @@ public final class Walletunlocker {
      * <code>.lnrpc.ChanBackupSnapshot channel_backups = 3;</code>
      */
     @java.lang.Override
-    public lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder() {
-      return channelBackups_ == null ? lnrpc.LightningOuterClass.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
+    public lnrpc.Lnd.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder() {
+      return channelBackups_ == null ? lnrpc.Lnd.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
     }
 
     public static final int STATELESS_INIT_FIELD_NUMBER = 4;
@@ -7393,9 +7393,9 @@ public final class Walletunlocker {
         return this;
       }
 
-      private lnrpc.LightningOuterClass.ChanBackupSnapshot channelBackups_;
+      private lnrpc.Lnd.ChanBackupSnapshot channelBackups_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.ChanBackupSnapshot, lnrpc.LightningOuterClass.ChanBackupSnapshot.Builder, lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder> channelBackupsBuilder_;
+          lnrpc.Lnd.ChanBackupSnapshot, lnrpc.Lnd.ChanBackupSnapshot.Builder, lnrpc.Lnd.ChanBackupSnapshotOrBuilder> channelBackupsBuilder_;
       /**
        * <pre>
        *
@@ -7427,9 +7427,9 @@ public final class Walletunlocker {
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 3;</code>
        * @return The channelBackups.
        */
-      public lnrpc.LightningOuterClass.ChanBackupSnapshot getChannelBackups() {
+      public lnrpc.Lnd.ChanBackupSnapshot getChannelBackups() {
         if (channelBackupsBuilder_ == null) {
-          return channelBackups_ == null ? lnrpc.LightningOuterClass.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
+          return channelBackups_ == null ? lnrpc.Lnd.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
         } else {
           return channelBackupsBuilder_.getMessage();
         }
@@ -7447,7 +7447,7 @@ public final class Walletunlocker {
        *
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 3;</code>
        */
-      public Builder setChannelBackups(lnrpc.LightningOuterClass.ChanBackupSnapshot value) {
+      public Builder setChannelBackups(lnrpc.Lnd.ChanBackupSnapshot value) {
         if (channelBackupsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -7474,7 +7474,7 @@ public final class Walletunlocker {
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 3;</code>
        */
       public Builder setChannelBackups(
-          lnrpc.LightningOuterClass.ChanBackupSnapshot.Builder builderForValue) {
+          lnrpc.Lnd.ChanBackupSnapshot.Builder builderForValue) {
         if (channelBackupsBuilder_ == null) {
           channelBackups_ = builderForValue.build();
         } else {
@@ -7497,11 +7497,11 @@ public final class Walletunlocker {
        *
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 3;</code>
        */
-      public Builder mergeChannelBackups(lnrpc.LightningOuterClass.ChanBackupSnapshot value) {
+      public Builder mergeChannelBackups(lnrpc.Lnd.ChanBackupSnapshot value) {
         if (channelBackupsBuilder_ == null) {
           if (((bitField0_ & 0x00000004) != 0) &&
             channelBackups_ != null &&
-            channelBackups_ != lnrpc.LightningOuterClass.ChanBackupSnapshot.getDefaultInstance()) {
+            channelBackups_ != lnrpc.Lnd.ChanBackupSnapshot.getDefaultInstance()) {
             getChannelBackupsBuilder().mergeFrom(value);
           } else {
             channelBackups_ = value;
@@ -7551,7 +7551,7 @@ public final class Walletunlocker {
        *
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 3;</code>
        */
-      public lnrpc.LightningOuterClass.ChanBackupSnapshot.Builder getChannelBackupsBuilder() {
+      public lnrpc.Lnd.ChanBackupSnapshot.Builder getChannelBackupsBuilder() {
         bitField0_ |= 0x00000004;
         onChanged();
         return getChannelBackupsFieldBuilder().getBuilder();
@@ -7569,12 +7569,12 @@ public final class Walletunlocker {
        *
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 3;</code>
        */
-      public lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder() {
+      public lnrpc.Lnd.ChanBackupSnapshotOrBuilder getChannelBackupsOrBuilder() {
         if (channelBackupsBuilder_ != null) {
           return channelBackupsBuilder_.getMessageOrBuilder();
         } else {
           return channelBackups_ == null ?
-              lnrpc.LightningOuterClass.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
+              lnrpc.Lnd.ChanBackupSnapshot.getDefaultInstance() : channelBackups_;
         }
       }
       /**
@@ -7591,11 +7591,11 @@ public final class Walletunlocker {
        * <code>.lnrpc.ChanBackupSnapshot channel_backups = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          lnrpc.LightningOuterClass.ChanBackupSnapshot, lnrpc.LightningOuterClass.ChanBackupSnapshot.Builder, lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder> 
+          lnrpc.Lnd.ChanBackupSnapshot, lnrpc.Lnd.ChanBackupSnapshot.Builder, lnrpc.Lnd.ChanBackupSnapshotOrBuilder> 
           getChannelBackupsFieldBuilder() {
         if (channelBackupsBuilder_ == null) {
           channelBackupsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              lnrpc.LightningOuterClass.ChanBackupSnapshot, lnrpc.LightningOuterClass.ChanBackupSnapshot.Builder, lnrpc.LightningOuterClass.ChanBackupSnapshotOrBuilder>(
+              lnrpc.Lnd.ChanBackupSnapshot, lnrpc.Lnd.ChanBackupSnapshot.Builder, lnrpc.Lnd.ChanBackupSnapshotOrBuilder>(
                   getChannelBackups(),
                   getParentForChildren(),
                   isClean());
@@ -9573,7 +9573,7 @@ public final class Walletunlocker {
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          lnrpc.LightningOuterClass.getDescriptor(),
+          lnrpc.Lnd.getDescriptor(),
         });
     internal_static_lnrpc_GenSeedRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -9635,7 +9635,7 @@ public final class Walletunlocker {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_lnrpc_ChangePasswordResponse_descriptor,
         new java.lang.String[] { "AdminMacaroon", });
-    lnrpc.LightningOuterClass.getDescriptor();
+    lnrpc.Lnd.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

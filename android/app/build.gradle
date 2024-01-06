@@ -187,7 +187,7 @@ dependencies {
         implementation jscFlavor
     }
 
-    implementation files('libs/Lndmobile.aar')
+    implementation files('libs/Litdmobile.aar')
     implementation 'com.google.protobuf:protobuf-java:3.24.3'
     implementation project(':react-native-camera')
     implementation 'com.jakewharton:process-phoenix:2.0.0'
