@@ -28,7 +28,7 @@ import { AuthContext, AuthProvider } from './AuthContext';
 import { InitProvider } from './InitContext';
 import { PayModeContext, PayModeProvider } from './PayModeContext';
 import { ThemeContext, ThemeProvider } from './ThemeContext';
-import { PermissionsAndroid, Platform } from 'react-native';
+import { Linking, PermissionsAndroid, Platform } from 'react-native';
 import notifee from '@notifee/react-native';
 
 const Stack = createStackNavigator();
@@ -72,7 +72,7 @@ function HeaderButtons({ style }) {
   };
 
   const macaroonExists = async () => {
-    const lndPath = RNFS.DocumentDirectoryPath;
+    const lndPath = RNFS.DocumentDirectoryPath + "/lnd";
     const filePath = `${lndPath}/data/chain/bitcoin/mainnet/admin.macaroon`;
     return await RNFS.exists(filePath);
   };
@@ -125,12 +125,19 @@ function HeaderButtons({ style }) {
 
   const startService = async () => {
     await requestPermissions();
+
     notifee.registerForegroundService(notification => {
       return new Promise(() => {});
     });
     const channelId = await notifee.createChannel({
       id: 'liminal',
       name: 'Liminal Service',
+      vibration: false,
+    });
+    notifee.onBackgroundEvent(async message => {
+      console.log('background', message);
+      Linking.openURL('com.liminal://home');
+      return true;
     });
     notifee.displayNotification({
       title: 'liminal wallet',
@@ -141,6 +148,10 @@ function HeaderButtons({ style }) {
         asForegroundService: true,
         colorized: false,
         ongoing: true,
+      },
+      pressAction: {
+        launchActivity: "default",
+        id: "default",
       },
     });
   };

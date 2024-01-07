@@ -25,7 +25,7 @@ const CreateWalletView = () => {
       setInputValue(seed);
     } catch (error) {
       console.error('Error genseed:', error);
-      setTimeout(createWallet, 500);
+      // setTimeout(createWallet, 500);
     }
   };
 
@@ -57,7 +57,7 @@ const CreateWalletView = () => {
         <TextInput
           style={[
             styles.seedInput,
-            { color: textColor, placeholderTextColor: textColor },
+            { color: textColor },
           ]}
           value={inputValue}
           multiline
