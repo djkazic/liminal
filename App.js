@@ -72,7 +72,7 @@ function HeaderButtons({ style }) {
   };
 
   const macaroonExists = async () => {
-    const lndPath = RNFS.DocumentDirectoryPath;
+    const lndPath = RNFS.DocumentDirectoryPath + "/lnd";
     const filePath = `${lndPath}/data/chain/bitcoin/mainnet/admin.macaroon`;
     return await RNFS.exists(filePath);
   };

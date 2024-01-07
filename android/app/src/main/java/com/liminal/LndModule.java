@@ -596,7 +596,7 @@ public class LndModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void rescan(Promise promise) {
         Log.i("LND", "requestrescan");
-        String lndPath = getReactApplicationContext().getFilesDir().getPath();
+        String lndPath = getReactApplicationContext().getFilesDir().getPath() + "/lnd";
         String rescanFileName = "rescanrequested";
         Path rescanFilePath = Paths.get(lndPath, rescanFileName);
         try {
@@ -613,8 +613,8 @@ public class LndModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void forceGossip(Promise promise) {
         Log.i("LND", "forcegossip");
-        String lndPath = getReactApplicationContext().getCacheDir().getPath();
-        Path filePath = Paths.get(lndPath + "/lastrun");
+        String cachePath = getReactApplicationContext().getCacheDir().getPath();
+        Path filePath = Paths.get(cachePath + "/lastrun");
         if (Files.exists(filePath)) {
             try {
                 Files.delete(filePath);

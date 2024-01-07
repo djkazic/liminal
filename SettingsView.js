@@ -70,7 +70,7 @@ const SettingsView = () => {
   };
 
   const getScbBackup = async () => {
-    const lndPath = RNFS.DocumentDirectoryPath;
+    const lndPath = RNFS.DocumentDirectoryPath + "/lnd";
     const filePath = `${lndPath}/data/chain/bitcoin/mainnet/channel.backup`;
     const fileExists = await RNFS.exists(filePath);
     if (fileExists) {
@@ -89,7 +89,7 @@ const SettingsView = () => {
   };
 
   const getAppLogs = async () => {
-    const lndPath = RNFS.DocumentDirectoryPath;
+    const lndPath = RNFS.DocumentDirectoryPath + "/lnd";
     const filePath = `${lndPath}/app_logs.txt`;
     const fileExists = await RNFS.exists(filePath);
     if (fileExists) {
@@ -108,7 +108,7 @@ const SettingsView = () => {
   };
 
   const deleteAppLogs = async () => {
-    const lndPath = RNFS.DocumentDirectoryPath;
+    const lndPath = RNFS.DocumentDirectoryPath + "/lnd";
     const filePath = `${lndPath}/app_logs.txt`;
     const fileExists = await RNFS.exists(filePath);
     if (fileExists) {
@@ -123,7 +123,7 @@ const SettingsView = () => {
   };
 
   const getLndLogs = async () => {
-    const lndPath = RNFS.DocumentDirectoryPath;
+    const lndPath = RNFS.DocumentDirectoryPath + "/lnd";
     const filePath = `${lndPath}/logs/bitcoin/mainnet/lnd.log`;
     const fileExists = await RNFS.exists(filePath);
     if (fileExists) {

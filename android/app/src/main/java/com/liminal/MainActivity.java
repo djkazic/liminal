@@ -76,7 +76,8 @@ public class MainActivity extends ReactActivity {
         Runnable lnd = new Runnable() {
             @Override
             public void run() {
-                String lndPath = getApplicationContext().getFilesDir().getPath();
+                String litPath = getApplicationContext().getFilesDir().getPath();
+                String lndPath = litPath + "/lnd";
                 Path filePath = Paths.get(lndPath + "/data/chain/bitcoin/mainnet/wallet.db");
                 boolean unlock = false;
                 if (Files.exists(filePath)) {
@@ -100,7 +101,7 @@ public class MainActivity extends ReactActivity {
                         Log.e("LITD", "Error writing password file", e);
                     }
                 }
-                File config = new File(lndPath, "lit.conf");
+                File config = new File(litPath, "lit.conf");
                 FileWriter writer;
                 try {
                     writer = new FileWriter(config);
@@ -109,7 +110,7 @@ public class MainActivity extends ReactActivity {
                             .append("disableui=true\n")
                             .append("lnd-mode=integrated\n")
                             .append("network=mainnet\n\n")
-                            .append("lnd.lnddir=").append(lndPath).append("/lnd\n")
+                            .append("lnd.lnddir=").append(litPath).append("/lnd\n")
                             .append("lnd.nolisten=true\n")
                             .append("lnd.norest=true\n")
                             .append("lnd.sync-freelist=true\n")
@@ -130,10 +131,10 @@ public class MainActivity extends ReactActivity {
                             .append("lnd.protocol.zero-conf=true\n")
                             .append("lnd.protocol.option-scid-alias=true\n")
                             .append("lnd.routerrpc.estimator=bimodal\n\n");
-                    sb.append("faraday.faradaydir=").append(lndPath).append("/faraday\n\n");
-                    sb.append("loop.loopdir=").append(lndPath).append("/loop\n\n");
-                    sb.append("pool.basedir=").append(lndPath).append("/pool\n\n");
-                    sb.append("taproot-assets.tapddir=").append(lndPath).append("/tapd\n\n");
+                    sb.append("faraday.faradaydir=").append(litPath).append("/faraday\n\n");
+                    sb.append("loop.loopdir=").append(litPath).append("/loop\n\n");
+                    sb.append("pool.basedir=").append(litPath).append("/pool\n\n");
+                    sb.append("taproot-assets.tapddir=").append(litPath).append("/tapd\n\n");
                     writer.write(sb.toString());
                     writer.flush();
                     writer.close();
@@ -143,7 +144,7 @@ public class MainActivity extends ReactActivity {
                 }
                 // String args = "--lnd.lnddir=" + lndPath;
                 // String args = "--network=mainnet --lnd-mode=integrated --lnd.bitcoin.active --lnd.bitcoin.mainnet --lnd.lnddir=" + lndPath + " --lnd.bitcoin.node=neutrino --lnd.neutrino.addpeer=node.blixtwallet.com --lnd.neutrino.feeurl=https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json";
-                String args = "--lit-dir=" + lndPath;
+                String args = "--lit-dir=" + litPath;
                 Log.i("LND", args);
                 String rescanFileName = "rescanrequested";
                 Path rescanFilePath = Paths.get(lndPath, rescanFileName);

@@ -38,7 +38,7 @@ const MainScreen = () => {
   const logFilePath = RNFS.DocumentDirectoryPath + '/app_logs.txt';
 
   const macaroonExists = async () => {
-    const lndPath = RNFS.DocumentDirectoryPath;
+    const lndPath = RNFS.DocumentDirectoryPath + "/lnd";
     const filePath = `${lndPath}/data/chain/bitcoin/mainnet/admin.macaroon`;
     return await RNFS.exists(filePath);
   };

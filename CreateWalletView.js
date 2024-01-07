@@ -57,7 +57,7 @@ const CreateWalletView = () => {
         <TextInput
           style={[
             styles.seedInput,
-            { color: textColor, placeholderTextColor: textColor },
+            { color: textColor },
           ]}
           value={inputValue}
           multiline
