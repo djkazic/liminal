@@ -8,6 +8,7 @@ import {
   Button,
   StyleSheet,
   NativeModules,
+  ScrollView,
 } from 'react-native';
 import RNFS from 'react-native-fs';
 import Share from 'react-native-share';
@@ -22,6 +23,11 @@ const SettingsView = () => {
   const [numChannels, setNumChannels] = useState(0);
   const [numNodes, setNumNodes] = useState(0);
   const [resetResult, setResetResult] = useState(null);
+  const [loopOutQuote, setLoopOutQuote] = useState(null);
+  const [loopOutTerms, setLoopOutTerms] = useState(null);
+  const [poolAccounts, setPoolAccounts] = useState(null);
+  const [poolLeases, setPoolLeases] = useState(null);
+  const [poolQuote, setPoolQuote] = useState(null);
   const [bitcoinBackend, setBitcoinBackend] = useState('node.eldamar.icu');
   const { isDarkTheme, setIsDarkTheme, toggleTheme } = useContext(ThemeContext);
   const backgroundColor = isDarkTheme ? '#282828' : 'white';
@@ -187,6 +193,32 @@ const SettingsView = () => {
     );
   };
 
+  const getLoopOutQuote = async () => {
+    const loopOutRes = await NativeModules.LoopModule.loopOutQuote();
+    setLoopOutQuote(loopOutRes);
+  };
+
+  const getLoopOutTerms = async () => {
+    const loopOutTermsRes = await NativeModules.LoopModule.loopOutTerms();
+    setLoopOutTerms(loopOutTermsRes);
+  };
+
+  const getPoolAccounts = async () => {
+    const poolAccountsRes = await NativeModules.PoolModule.listAccounts();
+    setPoolAccounts(poolAccountsRes);
+  }
+
+  const getPoolLeases = async () => {
+    const poolLeasesRes = await NativeModules.PoolModule.leases();
+    setPoolLeases(poolLeasesRes);
+  }
+
+  const getPoolQuote = async () => {
+    const poolQuoteRes = await NativeModules.PoolModule.quoteOrderRequest();
+    setPoolQuote(`Rate per block: ${poolQuoteRes.ratePerBlock}, ` + 
+      `execution fee: ${poolQuoteRes.totalExecutionFee} sats, premium: ${poolQuoteRes.totalPremium} sats, worst case onchain fee: ${poolQuoteRes.worstCaseChainFee}`);
+  }
+
   const resetPathfinding = async () => {
     const resetRes = await NativeModules.LndModule.resetMc();
     setGotResetResult(true);
@@ -194,6 +226,14 @@ const SettingsView = () => {
       setResetResult('Reset OK');
     }
   };
+
+  const clearResults = async () => {
+    setLoopOutQuote(null);
+    setLoopOutTerms(null);
+    setPoolAccounts(null);
+    setPoolLeases(null);
+    setPoolQuote(null);
+  }
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
@@ -219,66 +259,132 @@ const SettingsView = () => {
       {/* <View style={styles.buttonContainer}>
         <Button title="Get Node Info" onPress={getNodeInfo} />
       </View> */}
+      <ScrollView>
+        <View style={styles.buttonContainer}>
+          <Button title="Switch theme (light/dark)" onPress={toggleTheme} />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <Button title="Switch theme (light/dark)" onPress={toggleTheme} />
-      </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Get Network Info" onPress={getNetworkInfo} />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <Button title="Get Network Info" onPress={getNetworkInfo} />
-      </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Reset Pathfinding" onPress={resetPathfinding} />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <Button title="Reset Pathfinding" onPress={resetPathfinding} />
-      </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Get channel backup" onPress={getScbBackup} />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <Button title="Get channel backup" onPress={getScbBackup} />
-      </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Get app logs" onPress={getAppLogs} />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <Button title="Get app logs" onPress={getAppLogs} />
-      </View>
+        {/* <View style={styles.buttonContainer}>
+          <Button title="Delete app logs" onPress={deleteAppLogs} />
+        </View> */}
 
-      <View style={styles.buttonContainer}>
-        <Button title="Delete app logs" onPress={deleteAppLogs} />
-      </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Get LND logs" onPress={getLndLogs} />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <Button title="Get LND logs" onPress={getLndLogs} />
-      </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Rescan & restart" onPress={rescan} />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <Button title="Rescan & restart" onPress={rescan} />
-      </View>
+        {/* <View style={styles.buttonContainer}>
+          <Button title="Force speedloader & restart" onPress={forceGossip} />
+        </View> */}
 
-      <View style={styles.buttonContainer}>
-        <Button title="Force speedloader & restart" onPress={forceGossip} />
-      </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Get Loop out quote" onPress={getLoopOutQuote} />
+        </View>
 
-      <Text style={{ paddingBottom: 10, color: textColor }}>
-        liminal v1.0.0
-      </Text>
+        <View style={styles.buttonContainer}>
+          <Button title="Get Loop out terms" onPress={getLoopOutTerms} />
+        </View>
 
-      {gotNetworkData && (
-        <>
-          <Text style={[styles.boldText, { color: textColor }]}>
-            Network data
-          </Text>
-          <Text style={{ color: textColor }}>{numChannels} channels</Text>
-          <Text style={{ color: textColor }}>{numNodes} nodes</Text>
-          <Text style={{ color: textColor }}>{numZombies} zombies</Text>
-        </>
-      )}
+        <View style={styles.buttonContainer}>
+          <Button title="Get Pool accounts" onPress={getPoolAccounts} />
+        </View>
 
-      {resetResult && (
-        <>
-          <Text style={[styles.boldText, { color: textColor }]}>
-            Pathfinding reset
-          </Text>
-          <Text style={{ color: textColor }}>{resetResult}</Text>
-        </>
-      )}
+        <View style={styles.buttonContainer}>
+          <Button title="Get Pool leases" onPress={getPoolLeases} />
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <Button title="Get Pool quote" onPress={getPoolQuote} />
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <Button title="Clear results" onPress={clearResults} />
+        </View>
+
+        {gotNetworkData && (
+          <>
+            <Text style={[styles.boldText, { color: textColor }]}>
+              Network data
+            </Text>
+            <Text style={{ color: textColor }}>{numChannels} channels</Text>
+            <Text style={{ color: textColor }}>{numNodes} nodes</Text>
+            <Text style={{ color: textColor }}>{numZombies} zombies</Text>
+          </>
+        )}
+
+        {resetResult && (
+          <>
+            <Text style={[styles.boldText, { color: textColor }]}>
+              Pathfinding reset
+            </Text>
+            <Text style={{ color: textColor }}>{resetResult}</Text>
+          </>
+        )}
+
+        {loopOutQuote && (
+          <>
+            <Text style={[styles.boldText, { color: textColor }]}>
+              Loop out quote
+            </Text>
+            <Text style={{ color: textColor }}>{loopOutQuote}</Text>
+          </>
+        )}
+
+        {loopOutTerms && (
+          <>
+            <Text style={[styles.boldText, { color: textColor }]}>
+              Loop out terms
+            </Text>
+            <Text style={{ color: textColor }}>{loopOutTerms}</Text>
+          </>
+        )}
+
+        {poolAccounts && (
+          <>
+            <Text style={[styles.boldText, { color: textColor }]}>
+              Pool accounts
+            </Text>
+            <Text style={{ color: textColor }}>{poolAccounts}</Text>
+          </>
+        )}
+
+        {poolLeases && (
+          <>
+            <Text style={[styles.boldText, { color: textColor }]}>
+              Pool leases
+            </Text>
+            <Text style={{ color: textColor }}>{poolLeases}</Text>
+          </>
+        )}
+
+        {poolQuote && (
+          <>
+            <Text style={[styles.boldText, { color: textColor }]}>
+              Pool quote
+            </Text>
+            <Text style={{ color: textColor }}>{poolQuote}</Text>
+          </>
+        )}
+      </ScrollView>
     </View>
   );
 };
@@ -306,7 +412,7 @@ const styles = StyleSheet.create({
     width: '60%',
   },
   buttonContainer: {
-    marginBottom: 20,
+    marginBottom: 10,
   },
   boldText: {
     marginTop: 10,

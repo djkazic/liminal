@@ -1166,14 +1166,6 @@ public class LndModule extends ReactContextBaseJavaModule {
         }
     }
 
-    private WritableArray convertListToWritableArray(List<WritableMap> allTransactions) {
-        WritableArray array = Arguments.createArray();
-        for (WritableMap transaction : allTransactions) {
-            array.pushMap(transaction);
-        }
-        return array;
-    }
-
     private WritableMap convertToWritableMap(ReadableMap readableMap) {
         WritableMap writableMap = new WritableNativeMap();
         writableMap.merge(readableMap);

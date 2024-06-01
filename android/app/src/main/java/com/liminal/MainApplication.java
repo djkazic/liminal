@@ -33,6 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new LndLogPackage());
       packages.add(new LndPackage());
+      packages.add(new LoopPackage());
+      packages.add(new PoolPackage());
       packages.add(new RNCameraPackage());
       // Packages that cannot be autolinked yet can be added manually here, for
       // example:
