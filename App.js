@@ -23,13 +23,13 @@ import {
 } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import useDataFetching from './hooks/DataFetching';
-import RNFS from 'react-native-fs';
 import { AuthContext, AuthProvider } from './AuthContext';
 import { InitProvider } from './InitContext';
 import { PayModeContext, PayModeProvider } from './PayModeContext';
 import { ThemeContext, ThemeProvider } from './ThemeContext';
 import { PermissionsAndroid, Platform } from 'react-native';
 import notifee from '@notifee/react-native';
+import { macaroonExists } from './Utils';
 
 const Stack = createStackNavigator();
 
@@ -69,16 +69,6 @@ function HeaderButtons({ style }) {
       default:
         return 20;
     }
-  };
-
-  const BuildConfig = require('react-native-build-config');
-
-  const macaroonExists = async () => {
-    const lndPath = RNFS.DocumentDirectoryPath;
-    const flavor = BuildConfig.default.FLAVOR_network;
-    const network = flavor.toLowerCase().includes('mainnet') ? 'mainnet' : 'testnet';
-    const filePath = `${lndPath}/data/chain/bitcoin/${network}/admin.macaroon`;
-    return await RNFS.exists(filePath);
   };
 
   const getInfo = async () => {

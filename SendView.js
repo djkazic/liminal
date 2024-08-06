@@ -17,6 +17,7 @@ import { PayModeContext } from './PayModeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useRoute } from '@react-navigation/native';
 import { ThemeContext } from './ThemeContext';
+import { fetchFee } from './Utils';
 
 const SendView = () => {
   const navigation = useNavigation();
@@ -174,32 +175,17 @@ const SendView = () => {
     }
   };
 
-  const fetchFee = async () => {
-    try {
-      const response = await fetch(
-        'https://mempool.space/api/v1/fees/recommended'
-      );
-      if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
-      }
-      const data = await response.json();
-      const hourFee = data.hourFee;
-      console.log('Hour fee rate:', hourFee);
+  useEffect(() => {
+    const fetchAndSetFee = async () => {
+      const hourFee = await fetchFee();
       setHourFee(hourFee);
       setFeeRate(hourFee);
-    } catch (error) {
-      console.error(
-        'There has been a problem with your fetch operation:',
-        error
-      );
-    }
-  };
+    };
 
-  useEffect(() => {
     if (invoice) {
       decodeInvoice(invoice);
     } else {
-      fetchFee();
+      fetchAndSetFee();
     }
   }, [invoice, address]);
 

@@ -126,9 +126,11 @@ android {
 
         bitcoinMainnet {
             dimension "network"
+            resValue "string", "app_name", "liminal"
         }
         bitcoinTestnet {
             dimension "network"
+            resValue "string", "app_name", "liminal testnet"
             applicationIdSuffix ".testnet"
             versionNameSuffix "-testnet"
         }

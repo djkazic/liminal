@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   DeviceEventEmitter,
   View,
   Text,
@@ -10,12 +11,13 @@ import {
   NativeModules,
 } from 'react-native';
 import { ThemeContext } from './ThemeContext';
+import { fetchFee } from './Utils';
 
 const OpenChannelView = () => {
   const [connectionURI, setConnectionURI] = useState('');
   const [announceChannel, setAnnounceChannel] = useState(false);
-  const [localAmount, setLocalAmount] = useState(0);
-  const [feeRate, setFeeRate] = useState(0);
+  const [localAmount, setLocalAmount] = useState('');
+  const [feeRate, setFeeRate] = useState('');
   const [pendingChannelId, setPendingChannelId] = useState(null);
   const [openChannelTxId, setOpenChannelTxId] = useState(null);
   const [openChannelResult, setOpenChannelResult] = useState(null);
@@ -49,13 +51,13 @@ const OpenChannelView = () => {
     }
     console.log('openchannel');
     try {
-      console.log(typeof localAmount);
-      console.log(typeof feeRate);
+      const parsedAmount = parseInt(localAmount, 10);
+      const parsedFeeRate = parseInt(feeRate, 10);
       setOpenChannelResult("Opening channel...");
       await NativeModules.LndModule.openChannel(
         connectionURI,
-        localAmount,
-        feeRate,
+        parsedAmount,
+        parsedFeeRate,
         announceChannel
       );
     } catch (error) {
@@ -65,6 +67,15 @@ const OpenChannelView = () => {
     }
     setIsPaying(false);
   };
+
+  useEffect(() => {
+    const fetchAndSetFee = async () => {
+      const hourFee = await fetchFee();
+      setFeeRate(hourFee);
+    };
+
+    fetchAndSetFee();
+  })
 
   useEffect(() => {
     const subscription = DeviceEventEmitter.addListener(
@@ -113,8 +124,8 @@ const OpenChannelView = () => {
           <TextInput
             style={[styles.input, { color: textColor, borderColor: textColor }]}
             placeholderTextColor={textColor}
-            value={localAmount.toString()}
-            onChangeText={text => setLocalAmount(Number(text))}
+            value={localAmount}
+            onChangeText={setLocalAmount}
             keyboardType="numeric"
           />
         </View>
@@ -125,9 +136,9 @@ const OpenChannelView = () => {
           </Text>
           <TextInput
             style={[styles.input, { color: textColor, borderColor: textColor }]}
+            value={feeRate}
+            onChangeText={setFeeRate}
             placeholderTextColor={textColor}
-            value={feeRate.toString()}
-            onChangeText={text => setFeeRate(Number(text))}
             keyboardType="numeric"
           />
         </View>

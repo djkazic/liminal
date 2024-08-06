@@ -1232,14 +1232,17 @@ public class LndModule extends ReactContextBaseJavaModule {
                 // Log.i("LND", "walletbalance");
                 try {
                     if (bytes != null) {
+                        WritableMap resultMap = Arguments.createMap();
                         LightningOuterClass.WalletBalanceResponse response = LightningOuterClass.WalletBalanceResponse
                                 .parseFrom(bytes);
                         if (response == null) {
                             promise.resolve("0");
                             return;
                         }
-                        long totalBalance = response.getTotalBalance();
-                        promise.resolve(Long.toString(totalBalance));
+                        resultMap.putDouble("confirmedBalance", response.getConfirmedBalance());
+                        resultMap.putDouble("unconfirmedBalance", response.getUnconfirmedBalance());
+                        resultMap.putDouble("totalBalance", response.getTotalBalance());
+                        promise.resolve(resultMap);
                     } else {
                         promise.resolve("0");
                     }

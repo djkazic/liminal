@@ -11,7 +11,8 @@ import { ThemeContext } from './ThemeContext';
 
 const UTXOScreen = () => {
   // const navigation = useNavigation();
-  const [onchainBalance, setOnchainBalance] = useState(0);
+  const [onchainBalance, setOnchainBalance] = useState('0');
+  const [pendingBalance, setPendingBalance] = useState('0');
   const { isDarkTheme } = useContext(ThemeContext);
   const backgroundColor = isDarkTheme ? '#282828' : 'white';
   const textColor = isDarkTheme ? 'white' : 'black';
@@ -20,8 +21,8 @@ const UTXOScreen = () => {
     // console.log('getbalances');
     try {
       const onchainBalance = await NativeModules.LndModule.getOnchainBalance();
-      setOnchainBalance(onchainBalance);
-      console.log('Onchain balance', onchainBalance);
+      setOnchainBalance(onchainBalance.confirmedBalance);
+      setPendingBalance(onchainBalance.pendingBalance);
     } catch (error) {
       console.log('Failed to get onchain wallet balance', error);
     }
@@ -40,6 +41,11 @@ const UTXOScreen = () => {
         <Text style={{ fontSize: 32, alignSelf: 'center', color: textColor }}>
           ⛓️ {onchainBalance} sats
         </Text>
+        {pendingBalance && pendingBalance != '0' && (
+          <Text style={{ color: textColor, alignSelf: 'center' }}>
+            ⏳ ({formatNumber(pendingBalance)} pending)
+          </Text>
+        )}
         <View style={styles.utxoListContainer}>
           <React.StrictMode>
             <UTXOList />

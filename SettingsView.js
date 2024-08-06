@@ -263,7 +263,7 @@ const SettingsView = () => {
       </View>
 
       <Text style={{ paddingBottom: 10, color: textColor }}>
-        liminal v1.0.0
+        liminal v1.0.1
       </Text>
 
       {gotNetworkData && (

@@ -36,3 +36,6 @@ yarn-error.*
 
 *.keystore
 android/app/synthlock.keystore
+
+# Lndmobile
+android/app/libs/Lndmobile.aar

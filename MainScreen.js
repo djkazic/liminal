@@ -18,7 +18,7 @@ import { AppState } from 'react-native';
 import { InitContext } from './InitContext';
 import { AuthContext } from './AuthContext';
 import { ThemeContext } from './ThemeContext';
-import { formatNumber } from './Utils';
+import { formatNumber, macaroonExists } from './Utils';
 
 const MainScreen = () => {
   const { isDarkTheme } = useContext(ThemeContext);
@@ -33,18 +33,10 @@ const MainScreen = () => {
   const [wasInBackground, setWasInBackground] = useState(false);
   const [balance, setBalance] = useState('0');
   const [onchainBalance, setOnchainBalance] = useState('0');
+  const [pendingBalance, setPendingBalance] = useState('0');
   const [recoveryProgress, setRecoveryProgress] = useState(0);
   const [appState, setAppState] = useState(AppState.currentState);
   const logFilePath = RNFS.DocumentDirectoryPath + '/app_logs.txt';
-  const BuildConfig = require('react-native-build-config');
-
-  const macaroonExists = async () => {
-    const lndPath = RNFS.DocumentDirectoryPath;
-    const flavor = BuildConfig.default.FLAVOR_network;
-    const network = flavor.toLowerCase().includes('mainnet') ? 'mainnet' : 'testnet';
-    const filePath = `${lndPath}/data/chain/bitcoin/${network}/admin.macaroon`;
-    return await RNFS.exists(filePath);
-  };
 
   const checkWalletInitialized = async () => {
     try {
@@ -87,8 +79,9 @@ const MainScreen = () => {
     try {
       const balance = await NativeModules.LndModule.getLightningBalance();
       const onchainBalance = await NativeModules.LndModule.getOnchainBalance();
-      setBalance(Number(balance));
-      setOnchainBalance(Number(onchainBalance));
+      setBalance(balance);
+      setOnchainBalance(onchainBalance.confirmedBalance);
+      setPendingBalance(onchainBalance.pendingBalance);
     } catch (error) {
       console.log('Failed to get wallet balances', error);
     }
@@ -252,6 +245,11 @@ const MainScreen = () => {
             >
               ⛓️ {formatNumber(onchainBalance)} sats
             </Text>
+            {pendingBalance && pendingBalance != '0' && (
+              <Text style={{ color: textColor, alignSelf: 'center' }}>
+                ⏳ ({formatNumber(pendingBalance)} pending)
+              </Text>
+            )}
           </TouchableOpacity>
           <View style={styles.transactionsListContainer}>
             <TransactionsList />
