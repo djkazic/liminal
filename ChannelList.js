@@ -14,10 +14,12 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ThemeContext } from './ThemeContext';
+import { fetchFee } from './Utils';
 
 const ChannelList = () => {
   const [channels, setChannels] = useState(null);
-  const [pendingChannels, setPendingChannels] = useState(null);
+  const [pendingOpenChannels, setPendingOpenChannels] = useState([]);
+  const [pendingCloseChannels, setPendingCloseChannels] = useState([]);
   const [closedChannels, setClosedChannels] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -35,7 +37,6 @@ const ChannelList = () => {
       feeRate
     );
     setIsForceClose(false);
-    setFeeRate(0);
     closeModal();
   };
 
@@ -75,14 +76,18 @@ const ChannelList = () => {
 
   const getChannels = async () => {
     try {
-      console.log('Trying to get channels for list');
-      console.log('listchannels');
       const channels = await NativeModules.LndModule.listChannels();
       setChannels(channels);
-      console.log('pendingchannels');
       const pendingChannels = await NativeModules.LndModule.pendingChannels();
-      setPendingChannels(pendingChannels);
-      console.log('closedchannels');
+      if (pendingChannels) {
+        for (const chan of pendingChannels) {
+          if (chan.class == "Pending Open") {
+            setPendingOpenChannels([...pendingOpenChannels, chan])
+          } else {
+            setPendingCloseChannels([...pendingCloseChannels, chan])
+          }
+        }
+      }
       const closedChannels = await NativeModules.LndModule.closedChannels();
       setClosedChannels(closedChannels);
     } catch (error) {
@@ -92,6 +97,12 @@ const ChannelList = () => {
   };
 
   useEffect(() => {
+    const fetchAndSetFee = async () => {
+      const hourFee = await fetchFee();
+      setFeeRate(hourFee);
+    };
+
+    fetchAndSetFee();
     getChannels();
     const channelUpdateTimer = setInterval(getChannels, 1000);
     return () => clearInterval(channelUpdateTimer);
@@ -118,46 +129,56 @@ const ChannelList = () => {
   return (
     <>
       {channels && channels.length > 0 && (
-        <>
+        <View style={styles.wrapper}>
           <Text style={{ color: textColor }}>
             Open Channels
           </Text>
           <FlatList
-            contentContainerStyle={{ paddingBottom: 20 }}
             style={styles.container}
             data={channels}
             keyExtractor={item => item.channelPoint}
             renderItem={({ item }) => renderChannelItem(item, 'open')}
           />
-        </>
+        </View>
       )}
-      {pendingChannels && pendingChannels.length > 0 && (
-        <>
+      {pendingOpenChannels && pendingOpenChannels.length > 0 && (
+        <View style={styles.wrapper}>
           <Text style={{ color: textColor }}>
-            Pending Channels
+            Pending Open Channels
           </Text>
           <FlatList
-            contentContainerStyle={{ paddingBottom: 20 }}
             style={styles.container}
-            data={pendingChannels}
+            data={pendingOpenChannels}
             keyExtractor={item => item.channelPoint}
             renderItem={({ item }) => renderChannelItem(item, 'pending')}
           />
-        </>
+        </View>
+      )}
+      {pendingCloseChannels && pendingCloseChannels.length > 0 && (
+        <View style={styles.wrapper}>
+          <Text style={{ color: textColor }}>
+            Pending Force Close Channels
+          </Text>
+          <FlatList
+            style={styles.container}
+            data={pendingCloseChannels}
+            keyExtractor={item => item.channelPoint}
+            renderItem={({ item }) => renderChannelItem(item, 'pending')}
+          />
+        </View>
       )}
       {closedChannels && closedChannels.length > 0 && (
-        <>
+        <View style={styles.wrapper}>
           <Text style={{ color: textColor }}>
             Closed Channels
           </Text>
           <FlatList
-            contentContainerStyle={{ paddingBottom: 20 }}
             style={styles.container}
             data={closedChannels}
             keyExtractor={item => item.channelPoint}
             renderItem={({ item }) => renderChannelItem(item, 'closed')}
           />
-        </>
+        </View>
       )}
       {selectedItem && (
         <Modal
@@ -216,24 +237,19 @@ const ChannelList = () => {
                 );
               })()}
               <Text>{'\n'}</Text>
-              {/* <Text>Close channel fee rate</Text>
-              <TextInput
-                style={[styles.input, { textColor }]}
-                placeholder="Fee rate (sat/vB)"
-                placholderTextColor="black"
-                keyboardType="numeric"
-                onChangeText={text => setFeeRate(Number(text))}
-                value={feeRate.toString()}
-              /> */}
               {!selectedItem.class && (
                 <>
-                  <Text>Closing fee rate (sat/vB)</Text>
-                  <TextInput
-                    style={styles.input}
-                    value={isNaN(feeRate) ? '' : feeRate.toString()}
-                    onChangeText={text => setFeeRate(Number(text))}
-                    keyboardType="numeric"
-                  />
+                  <View style={styles.inlineContainer}>
+                    <Text>Co-op close fee rate (sat/vB):</Text>
+                    <TextInput
+                      style={styles.input}
+                      value={isNaN(feeRate) ? '' : feeRate.toString()}
+                      placeholder={feeRate.toString()}
+                      onChangeText={text => setFeeRate(Number(text))}
+                      keyboardType="numeric"
+                    />
+                  </View>
+                  <Text>Hold close channel button to force close</Text>
                   <TouchableOpacity
                     style={styles.buttonCloseChannel}
                     onPressIn={handleButtonPress}
@@ -257,7 +273,7 @@ const ChannelList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 10,
   },
   transactionItem: {
     flexDirection: 'row',
@@ -279,8 +295,6 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     marginTop: 22,
   },
   modalView: {
@@ -288,7 +302,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -327,6 +340,22 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 10,
   },
+  inlineContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  input: {
+    marginLeft: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 5,
+    flex: 1,
+  },
+  wrapper: {
+    flex: 0.2,
+  }
 });
 
 export default ChannelList;

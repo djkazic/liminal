@@ -81,13 +81,15 @@ public class MainActivity extends ReactActivity {
                 Path filePath = Paths.get(lndPath + "/data/chain/bitcoin/" + network + "/wallet.db");
                 boolean unlock = false;
                 if (Files.exists(filePath)) {
-                    gossipSync().thenAccept(response -> {
-                        Log.i("LND", "GossipSync: " + response);
-                        LndModule.gossipSync = false;
-                    }).exceptionally(e -> {
-                        e.printStackTrace();
-                        return null;
-                    });
+                    if (network == "mainnet") {
+                        gossipSync().thenAccept(response -> {
+                            Log.i("LND", "GossipSync: " + response);
+                            LndModule.gossipSync = false;
+                        }).exceptionally(e -> {
+                            e.printStackTrace();
+                            return null;
+                        });
+                    }
                     unlock = true;
                     File password = new File(lndPath, "password");
                     FileWriter pwWriter;

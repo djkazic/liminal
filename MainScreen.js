@@ -81,7 +81,7 @@ const MainScreen = () => {
       const onchainBalance = await NativeModules.LndModule.getOnchainBalance();
       setBalance(balance);
       setOnchainBalance(onchainBalance.confirmedBalance);
-      setPendingBalance(onchainBalance.pendingBalance);
+      setPendingBalance(onchainBalance.unconfirmedBalance);
     } catch (error) {
       console.log('Failed to get wallet balances', error);
     }
@@ -245,9 +245,9 @@ const MainScreen = () => {
             >
               ⛓️ {formatNumber(onchainBalance)} sats
             </Text>
-            {pendingBalance && pendingBalance != '0' && (
+            {pendingBalance != '0' && (
               <Text style={{ color: textColor, alignSelf: 'center' }}>
-                ⏳ ({formatNumber(pendingBalance)} pending)
+                ⏳ ({formatNumber(pendingBalance)} sats pending)
               </Text>
             )}
           </TouchableOpacity>

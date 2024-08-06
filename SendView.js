@@ -339,7 +339,7 @@ const SendView = () => {
                   style={[styles.input, { color: textColor }]}
                   value={feeRate}
                   onChangeText={setFeeRate}
-                  placeholder={hourFee.toString()}
+                  placeholder={feeRate.toString()}
                   placeholderTextColor={textColor}
                   keyboardType="numeric"
                 />
@@ -347,8 +347,8 @@ const SendView = () => {
 
               <View style={styles.paymentResult}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  {isPaying && <ActivityIndicator size="small" color="#00ff00"/>}
                   <Text style={{ color: textColor }}>{paymentResult}</Text>
-                  {isPaying && <ActivityIndicator size="small" color="#00ff00" style={{ marginLeft: 8 }}/>}
                 </View>
                 {payMode === 'lightning' && paymentTime.total != null ? (
                   <Text style={{ color: textColor }}>

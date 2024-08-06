@@ -1,6 +1,6 @@
 {
   "name": "liminal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "android:mainnetDebug": "cd android && ./gradlew assembleGeneralBitcoinMainnetDebug && adb install -r app/build/outputs/apk/generalBitcoinMainnet/debug/app-general-bitcoinMainnet-debug.apk && adb shell am start -n com.liminal/com.liminal.MainActivity",

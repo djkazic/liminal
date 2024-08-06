@@ -19,8 +19,7 @@ export const fetchFee = async () => {
       throw new Error('Network response was not ok ' + response.statusText);
     }
     const data = await response.json();
-    const hourFee = data.hourFee;
-    return hourFee;
+    return data.hourFee;
   } catch (error) {
     console.error(
       'There has been a problem with your fetch operation:',
