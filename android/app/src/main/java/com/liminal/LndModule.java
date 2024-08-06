@@ -923,6 +923,119 @@ public class LndModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void pendingChannels(Promise promise) {
+        LightningOuterClass.PendingChannelsRequest request = serializePendingChannels();
+        Lndmobile.pendingChannels(request.toByteArray(), new lndmobile.Callback() {
+            @Override
+            public void onError(Exception e) {
+                promise.reject("ERR_PENDING_CHANNELS", e);
+            }
+
+            @Override
+            public void onResponse(byte[] bytes) {
+                Log.i("LND", "pendingchannels");
+                try {
+                    WritableArray channelsArray = Arguments.createArray();
+                    if (bytes != null) {
+                        LightningOuterClass.PendingChannelsResponse response = LightningOuterClass.PendingChannelsResponse
+                                .parseFrom(bytes);
+                        for (LightningOuterClass.PendingChannelsResponse.PendingOpenChannel pendingOpenChannel : response.getPendingOpenChannelsList()) {
+                            LightningOuterClass.PendingChannelsResponse.PendingChannel channel = pendingOpenChannel.getChannel();
+                            WritableMap channelMap = Arguments.createMap();
+                            channelMap.putBoolean("active", false);
+                            channelMap.putString("class", "Pending Open");
+                            channelMap.putBoolean("private", channel.getPrivate());
+                            channelMap.putDouble("initiator", channel.getInitiatorValue());
+                            channelMap.putString("remotePubkey", channel.getRemoteNodePub());
+                            channelMap.putString("channelPoint", channel.getChannelPoint());
+                            channelMap.putDouble("capacity", channel.getCapacity());
+                            channelMap.putDouble("localBalance", channel.getLocalBalance());
+                            channelMap.putDouble("remoteBalance", channel.getRemoteBalance());
+                            channelMap.putDouble("localChannelReserve", channel.getLocalChanReserveSat());
+                            channelMap.putDouble("remoteChannelReserve", channel.getRemoteChanReserveSat());
+                            channelsArray.pushMap(channelMap);
+                        }
+                        for (LightningOuterClass.PendingChannelsResponse.ForceClosedChannel pendingForceClosedChannel : response.getPendingForceClosingChannelsList()) {
+                            LightningOuterClass.PendingChannelsResponse.PendingChannel channel = pendingForceClosedChannel.getChannel();
+                            WritableMap channelMap = Arguments.createMap();
+                            channelMap.putDouble("maturityHeight", pendingForceClosedChannel.getMaturityHeight());
+                            channelMap.putBoolean("active", false);
+                            channelMap.putString("class", "Pending Force Close");
+                            channelMap.putBoolean("private", channel.getPrivate());
+                            channelMap.putDouble("initiator", channel.getInitiatorValue());
+                            channelMap.putString("remotePubkey", channel.getRemoteNodePub());
+                            channelMap.putString("channelPoint", channel.getChannelPoint());
+                            channelMap.putDouble("capacity", channel.getCapacity());
+                            channelMap.putDouble("localBalance", channel.getLocalBalance());
+                            channelMap.putDouble("remoteBalance", channel.getRemoteBalance());
+                            channelMap.putDouble("localChannelReserve", channel.getLocalChanReserveSat());
+                            channelMap.putDouble("remoteChannelReserve", channel.getRemoteChanReserveSat());
+                            channelsArray.pushMap(channelMap);
+                        }
+                        for (LightningOuterClass.PendingChannelsResponse.WaitingCloseChannel waitingCloseChannel : response.getWaitingCloseChannelsList()) {
+                            LightningOuterClass.PendingChannelsResponse.PendingChannel channel = waitingCloseChannel.getChannel();
+                            WritableMap channelMap = Arguments.createMap();
+                            channelMap.putBoolean("active", false);
+                            channelMap.putString("class", "Waiting Close");
+                            channelMap.putBoolean("private", channel.getPrivate());
+                            channelMap.putDouble("initiator", channel.getInitiatorValue());
+                            channelMap.putString("remotePubkey", channel.getRemoteNodePub());
+                            channelMap.putString("channelPoint", channel.getChannelPoint());
+                            channelMap.putDouble("capacity", channel.getCapacity());
+                            channelMap.putDouble("localBalance", channel.getLocalBalance());
+                            channelMap.putDouble("remoteBalance", channel.getRemoteBalance());
+                            channelMap.putDouble("localChannelReserve", channel.getLocalChanReserveSat());
+                            channelMap.putDouble("remoteChannelReserve", channel.getRemoteChanReserveSat());
+                            channelsArray.pushMap(channelMap);
+                        }
+                    }
+                    promise.resolve(channelsArray);
+                } catch (InvalidProtocolBufferException e) {
+                    Log.e("LND", "Error parsing PendingChannelsResponse", e);
+                    promise.reject("ERROR_PARSING_RESPONSE", e);
+                }
+            }
+        });
+    }
+
+    @ReactMethod
+    public void closedChannels(Promise promise) {
+        LightningOuterClass.ClosedChannelsRequest request = serializeClosedChannels();
+        Lndmobile.closedChannels(request.toByteArray(), new lndmobile.Callback() {
+            @Override
+            public void onError(Exception e) {
+                promise.reject("ERR_CLOSED_CHANNELS", e);
+            }
+
+            @Override
+            public void onResponse(byte[] bytes) {
+                Log.i("LND", "closedchannels");
+                try {
+                    WritableArray channelsArray = Arguments.createArray();
+                    if (bytes != null) {
+                        LightningOuterClass.ClosedChannelsResponse response = LightningOuterClass.ClosedChannelsResponse
+                                .parseFrom(bytes);
+                        for (LightningOuterClass.ChannelCloseSummary channel : response.getChannelsList()) {
+                            WritableMap channelMap = Arguments.createMap();
+                            channelMap.putBoolean("active", false);
+                            channelMap.putDouble("closeInitiator", channel.getCloseInitiatorValue());
+                            channelMap.putString("remotePubkey", channel.getRemotePubkey());
+                            channelMap.putString("channelPoint", channel.getChannelPoint());
+                            channelMap.putDouble("capacity", channel.getCapacity());
+                            channelMap.putDouble("localBalance", channel.getSettledBalance());
+                            channelsArray.pushMap(channelMap);
+                        }
+                    }
+                    promise.resolve(channelsArray);
+                } catch (InvalidProtocolBufferException e) {
+                    Log.e("LND", "Error parsing ClosedChannelsResponse", e);
+                    promise.reject("ERROR_PARSING_RESPONSE", e);
+                }
+            }
+        });
+    }
+
+    @ReactMethod
     public void listPayments(Promise promise) {
         LightningOuterClass.ListPaymentsRequest request = serializeListPayments();
         Lndmobile.listPayments(request.toByteArray(), new lndmobile.Callback() {
@@ -1340,6 +1453,14 @@ public class LndModule extends ReactContextBaseJavaModule {
 
     private LightningOuterClass.ListChannelsRequest serializeListChannels() {
         return LightningOuterClass.ListChannelsRequest.newBuilder().build();
+    }
+
+    private LightningOuterClass.PendingChannelsRequest serializePendingChannels() {
+        return LightningOuterClass.PendingChannelsRequest.newBuilder().build();
+    }
+
+    private LightningOuterClass.ClosedChannelsRequest serializeClosedChannels() {
+        return LightningOuterClass.ClosedChannelsRequest.newBuilder().build();
     }
 
     private LightningOuterClass.ListPaymentsRequest serializeListPayments() {

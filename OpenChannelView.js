@@ -20,33 +20,38 @@ const OpenChannelView = () => {
   const [openChannelTxId, setOpenChannelTxId] = useState(null);
   const [openChannelResult, setOpenChannelResult] = useState(null);
   const [connectPeerResult, setConnectPeerResult] = useState(null);
+  const [isPaying, setIsPaying] = useState(false);
   const { isDarkTheme } = useContext(ThemeContext);
   const backgroundColor = isDarkTheme ? '#282828' : 'white';
   const textColor = isDarkTheme ? 'white' : 'black';
 
-  const connectPeer = async () => {
-    console.log('connectpeer');
-    try {
-      const connectPeerResult =
-        await NativeModules.LndModule.connectPeer(connectionURI);
-      setConnectPeerResult(connectPeerResult);
-    } catch (error) {
-      console.log('Failed to connectpeer', error);
-      setConnectPeerResult(error.toString());
-    }
-  };
+  // const connectPeer = async () => {
+  //   console.log('connectpeer');
+  //   try {
+  //     const connectPeerResult =
+  //       await NativeModules.LndModule.connectPeer(connectionURI);
+  //     setConnectPeerResult(connectPeerResult);
+  //   } catch (error) {
+  //     console.log('Failed to connectpeer', error);
+  //     setConnectPeerResult(error.toString());
+  //   }
+  // };
 
   const openChannel = async () => {
     console.log('connectpeer preopenchannel');
+    setIsPaying(true);
+    setOpenChannelResult("Connecting to peer...");
     try {
       await NativeModules.LndModule.connectPeer(connectionURI);
     } catch (error) {
       console.log('Failed to connectpeer', error);
+      setIsPaying(false);
     }
     console.log('openchannel');
     try {
       console.log(typeof localAmount);
       console.log(typeof feeRate);
+      setOpenChannelResult("Opening channel...");
       await NativeModules.LndModule.openChannel(
         connectionURI,
         localAmount,
@@ -56,7 +61,9 @@ const OpenChannelView = () => {
     } catch (error) {
       console.log('Failed to openchannel', error);
       setOpenChannelResult(error.toString());
+      setIsPaying(false);
     }
+    setIsPaying(false);
   };
 
   useEffect(() => {
@@ -67,6 +74,7 @@ const OpenChannelView = () => {
         setOpenChannelResult('Open channel success');
         setPendingChannelId(update.pendingChanId);
         setOpenChannelTxId(update.fundingTxId);
+        setIsPaying(false);
       }
     );
 
@@ -127,6 +135,7 @@ const OpenChannelView = () => {
         {openChannelResult && (
           <View>
             <Text style={{ color: textColor }}>{openChannelResult}</Text>
+            {isPaying && <ActivityIndicator size="small" color="#00ff00" style={{ marginLeft: 8 }}/>}
           </View>
         )}
 
@@ -138,13 +147,13 @@ const OpenChannelView = () => {
           </View>
         )}
 
-        {openChannelTxId && (
+        {/* {openChannelTxId && (
           <View style={styles.openChannelResult}>
             <Text style={{ color: textColor }}>
               Funded TXID: {openChannelTxId}
             </Text>
           </View>
-        )}
+        )} */}
 
         {connectPeerResult && (
           <View style={styles.openChannelResult}>
@@ -153,9 +162,9 @@ const OpenChannelView = () => {
         )}
 
         <View style={styles.spacer} />
-        <View style={styles.buttonContainer}>
+        {/* <View style={styles.buttonContainer}>
           <Button title="Connect Peer" onPress={connectPeer} />
-        </View>
+        </View> */}
         <View style={styles.buttonContainer}>
           <Button title="Open Channel" onPress={openChannel} />
         </View>

@@ -25,7 +25,8 @@ public class LndLogModule extends ReactContextBaseJavaModule {
     public void readLastLines(Promise promise) {
         try {
             String lndPath = getReactApplicationContext().getFilesDir().getPath();
-            File logFile = new File(lndPath + "/logs/bitcoin/mainnet/lnd.log");
+            String network = BuildConfig.FLAVOR_network.replace("bitcoin", "").toLowerCase();
+            File logFile = new File(lndPath + "/logs/bitcoin/" + network + "/lnd.log");
             if (!logFile.exists()) {
                 promise.reject("ERR_FILE_NOT_FOUND", "The log file does not exist at the expected path.");
                 return;

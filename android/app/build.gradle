@@ -115,13 +115,22 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
-    flavorDimensions "version"
+    flavorDimensions "version", "network"
     productFlavors {
         general {
             dimension "version"
         }
         mlkit {
             dimension "version"
+        }
+
+        bitcoinMainnet {
+            dimension "network"
+        }
+        bitcoinTestnet {
+            dimension "network"
+            applicationIdSuffix ".testnet"
+            versionNameSuffix "-testnet"
         }
     }
 }

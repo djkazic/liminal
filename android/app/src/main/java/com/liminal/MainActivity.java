@@ -47,6 +47,7 @@ public class MainActivity extends ReactActivity {
         LndModule.gossipSync = true;
         CompletableFuture<String> future = new CompletableFuture<>();
         Lndmobile.gossipSync(
+                "https://primer.blixtwallet.com",
                 getApplicationContext().getCacheDir().getAbsolutePath(),
                 getApplicationContext().getFilesDir().getAbsolutePath(),
                 "wifi", // TOOD: remove deprecated networkType param
@@ -76,7 +77,8 @@ public class MainActivity extends ReactActivity {
             @Override
             public void run() {
                 String lndPath = getApplicationContext().getFilesDir().getPath();
-                Path filePath = Paths.get(lndPath + "/data/chain/bitcoin/mainnet/wallet.db");
+                String network = BuildConfig.FLAVOR_network.replace("bitcoin", "").toLowerCase();
+                Path filePath = Paths.get(lndPath + "/data/chain/bitcoin/" + network + "/wallet.db");
                 boolean unlock = false;
                 if (Files.exists(filePath)) {
                     gossipSync().thenAccept(response -> {
@@ -102,29 +104,34 @@ public class MainActivity extends ReactActivity {
                 File config = new File(lndPath, "lnd.conf");
                 FileWriter writer;
                 try {
+                    String neutrinoServer = network == "mainnet" ? "btcd.lnolymp.us" : "testnet.lnolymp.us";
+                    String backupNeutrinoServer = network == "mainnet" ? "node.blixtwallet.com" : "faucet.lightning.community";
+                    String feeURL = network == "mainnet" ? "https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json" : "https://nodes.lightning.computer/fees/v1/btctestnet-fee-estimates.json";
                     writer = new FileWriter(config);
                     StringBuilder sb = new StringBuilder();
                     sb.append("[Application Options]\n")
                             .append("norest=true\n")
                             .append("sync-freelist=true\n")
-                            .append("accept-keysend=true\n\n")
+                            .append("accept-keysend=true\n")
                             .append("tlsdisableautofill=true\n\n");
                     if (unlock) {
                         sb.append("wallet-unlock-password-file=").append(lndPath).append("/password\n\n");
                     }
                     sb.append("[gossip]\n")
-                            .append("gossip.pinned-syncers=028c589131fae8c7e2103326542d568373019b50a9eb376a139a330c8545efb79a\n")
+                            .append("gossip.pinned-syncers=028c589131fae8c7e2103326542d568373019b50a9eb376a139a330c8545efb79a\n\n")
                             .append("[routing]\n")
-                            .append("routing.assumechanvalid=true\n")
+                            .append("routing.assumechanvalid=true\n\n")
                             .append("[bitcoin]\n")
                             .append("bitcoin.active=true\n")
-                            .append("bitcoin.mainnet=true\n")
+                            .append("bitcoin." + network + "=true\n")
                             .append("bitcoin.node=neutrino\n")
                             .append("bitcoin.defaultchanconfs=1\n\n")
                             .append("[neutrino]\n")
-                            .append("neutrino.connect=btcd.lnolymp.us\n")
-                            .append("neutrino.feeurl=https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json\n")
+                            .append("neutrino.addpeer=" + neutrinoServer + "\n")
+                            .append("neutrino.addpeer=" + backupNeutrinoServer + "\n")
                             .append("neutrino.persistfilters=true\n\n")
+                            .append("[fee]\n")
+                            .append("fee.url=" + feeURL + "\n\n")
                             .append("[protocol]\n")
                             .append("protocol.zero-conf=true\n")
                             .append("protocol.option-scid-alias=true\n\n")

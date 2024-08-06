@@ -186,6 +186,7 @@ const SendView = () => {
       const hourFee = data.hourFee;
       console.log('Hour fee rate:', hourFee);
       setHourFee(hourFee);
+      setFeeRate(hourFee);
     } catch (error) {
       console.error(
         'There has been a problem with your fetch operation:',
@@ -352,15 +353,17 @@ const SendView = () => {
                   style={[styles.input, { color: textColor }]}
                   value={feeRate}
                   onChangeText={setFeeRate}
-                  placeholder={hourFee.toString() + ' sat/vB for 1 hr'}
+                  placeholder={hourFee.toString()}
                   placeholderTextColor={textColor}
                   keyboardType="numeric"
                 />
               </View>
 
               <View style={styles.paymentResult}>
-                <Text style={{ color: textColor }}>{paymentResult}</Text>
-                {isPaying && <ActivityIndicator size="small" color="#00ff00" />}
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={{ color: textColor }}>{paymentResult}</Text>
+                  {isPaying && <ActivityIndicator size="small" color="#00ff00" style={{ marginLeft: 8 }}/>}
+                </View>
                 {payMode === 'lightning' && paymentTime.total != null ? (
                   <Text style={{ color: textColor }}>
                     Time to pay: {paymentTime.total} ms

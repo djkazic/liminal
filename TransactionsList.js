@@ -99,6 +99,8 @@ const TransactionsList = () => {
           let label = item.label;
           if (item.label && label.includes('openchannel')) {
             label = 'Channel open';
+          } else if (item.label && label.includes('closechannel')) {
+            label = 'Channel close';
           }
           const isLightning = item.type == 'invoice' || item.type == 'payment';
           let confs = '';

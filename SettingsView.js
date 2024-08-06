@@ -27,6 +27,8 @@ const SettingsView = () => {
   const backgroundColor = isDarkTheme ? '#282828' : 'white';
   const textColor = isDarkTheme ? 'white' : 'black';
 
+  const BuildConfig = require('react-native-build-config');
+
   const onchainNotification = async () => {
     await notifee.requestPermission();
     const channelId = await notifee.createChannel({
@@ -71,7 +73,9 @@ const SettingsView = () => {
 
   const getScbBackup = async () => {
     const lndPath = RNFS.DocumentDirectoryPath;
-    const filePath = `${lndPath}/data/chain/bitcoin/mainnet/channel.backup`;
+    const flavor = BuildConfig.default.FLAVOR_network;
+    const network = flavor.toLowerCase().includes('mainnet') ? 'mainnet' : 'testnet';
+    const filePath = `${lndPath}/data/chain/bitcoin/${network}/channel.backup`;
     const fileExists = await RNFS.exists(filePath);
     if (fileExists) {
       const shareOptions = {
@@ -124,7 +128,9 @@ const SettingsView = () => {
 
   const getLndLogs = async () => {
     const lndPath = RNFS.DocumentDirectoryPath;
-    const filePath = `${lndPath}/logs/bitcoin/mainnet/lnd.log`;
+    const flavor = BuildConfig.default.FLAVOR_network;
+    const network = flavor.toLowerCase().includes('mainnet') ? 'mainnet' : 'testnet';
+    const filePath = `${lndPath}/logs/bitcoin/${network}/lnd.log`;
     const fileExists = await RNFS.exists(filePath);
     if (fileExists) {
       const shareOptions = {

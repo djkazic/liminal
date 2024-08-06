@@ -36,10 +36,13 @@ const MainScreen = () => {
   const [recoveryProgress, setRecoveryProgress] = useState(0);
   const [appState, setAppState] = useState(AppState.currentState);
   const logFilePath = RNFS.DocumentDirectoryPath + '/app_logs.txt';
+  const BuildConfig = require('react-native-build-config');
 
   const macaroonExists = async () => {
     const lndPath = RNFS.DocumentDirectoryPath;
-    const filePath = `${lndPath}/data/chain/bitcoin/mainnet/admin.macaroon`;
+    const flavor = BuildConfig.default.FLAVOR_network;
+    const network = flavor.toLowerCase().includes('mainnet') ? 'mainnet' : 'testnet';
+    const filePath = `${lndPath}/data/chain/bitcoin/${network}/admin.macaroon`;
     return await RNFS.exists(filePath);
   };
 

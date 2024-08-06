@@ -71,9 +71,13 @@ function HeaderButtons({ style }) {
     }
   };
 
+  const BuildConfig = require('react-native-build-config');
+
   const macaroonExists = async () => {
     const lndPath = RNFS.DocumentDirectoryPath;
-    const filePath = `${lndPath}/data/chain/bitcoin/mainnet/admin.macaroon`;
+    const flavor = BuildConfig.default.FLAVOR_network;
+    const network = flavor.toLowerCase().includes('mainnet') ? 'mainnet' : 'testnet';
+    const filePath = `${lndPath}/data/chain/bitcoin/${network}/admin.macaroon`;
     return await RNFS.exists(filePath);
   };
 
@@ -163,7 +167,7 @@ function HeaderButtons({ style }) {
     >
       {isMainPage && isAuthenticated && (
         <>
-          <Text style={{ paddingRight: 4, color: textColor }}>CH</Text>
+          <Text style={{ paddingRight: 6, color: textColor }}>CH</Text>
           <Icon
             name={getSyncIcon(chainSyncStatus).name}
             size={getSyncIconSize(getSyncIcon(chainSyncStatus).name)}
@@ -178,7 +182,7 @@ function HeaderButtons({ style }) {
             style={{ marginRight: 10 }}
           />
           <TouchableOpacity onPress={() => navigation.navigate('Open Channel')}>
-            <Text style={{ marginRight: 20, color: textColor }}>➕</Text>
+            <Text style={{ marginLeft: 2, marginRight: 19, color: textColor }}>✨</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Logs')}>
             <Text style={{ marginRight: 20, color: textColor }}>📜</Text>

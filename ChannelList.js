@@ -17,6 +17,8 @@ import { ThemeContext } from './ThemeContext';
 
 const ChannelList = () => {
   const [channels, setChannels] = useState(null);
+  const [pendingChannels, setPendingChannels] = useState(null);
+  const [closedChannels, setClosedChannels] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isForceClose, setIsForceClose] = useState(false);
@@ -45,13 +47,11 @@ const ChannelList = () => {
 
   const handleButtonRelease = () => {
     clearTimeout(longPressTimer.current);
-    if (!isForceClose) {
-      closeChannel();
-    }
+    closeChannel();
   };
 
-  const copyToClipboard = paymentRequest => {
-    Clipboard.setString(paymentRequest);
+  const copyToClipboard = text => {
+    Clipboard.setString(text);
     Toast.show({
       type: 'success',
       position: 'bottom',
@@ -74,12 +74,17 @@ const ChannelList = () => {
   };
 
   const getChannels = async () => {
-    console.log('listchannels');
     try {
       console.log('Trying to get channels for list');
+      console.log('listchannels');
       const channels = await NativeModules.LndModule.listChannels();
-      //TODO: node resolution
       setChannels(channels);
+      console.log('pendingchannels');
+      const pendingChannels = await NativeModules.LndModule.pendingChannels();
+      setPendingChannels(pendingChannels);
+      console.log('closedchannels');
+      const closedChannels = await NativeModules.LndModule.closedChannels();
+      setClosedChannels(closedChannels);
     } catch (error) {
       console.log('Error fetching channels:', error);
       setTimeout(getChannels, 2000);
@@ -92,33 +97,68 @@ const ChannelList = () => {
     return () => clearInterval(channelUpdateTimer);
   }, []);
 
+  const renderChannelItem = (item, type) => (
+    <TouchableOpacity onPress={() => openModal(item)}>
+      <View style={styles.transactionItem}>
+        {type === 'open' && item.active ? (
+          <Icon name="checkmark-circle" color="green" />
+        ) : (
+          <Icon name="close-circle" color="red" />
+        )}
+        <Text style={{ color: textColor }}>
+          {item.remotePubkey.slice(0, 10) +
+            '...' +
+            item.remotePubkey.slice(-10)}
+        </Text>
+        <Text style={{ color: textColor }}>{item.capacity} sat</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <>
-      <FlatList
-        contentContainerStyle={{ paddingBottom: 20 }}
-        style={styles.container}
-        data={channels}
-        keyExtractor={item => item.channelPoint}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity onPress={() => openModal(item)}>
-              <View style={styles.transactionItem}>
-                {item.active ? (
-                  <Icon name="checkmark-circle" color="green" />
-                ) : (
-                  <Icon name="close-circle" color="red" />
-                )}
-                <Text style={{ color: textColor }}>
-                  {item.remotePubkey.slice(0, 10) +
-                    '...' +
-                    item.remotePubkey.slice(-10)}
-                </Text>
-                <Text style={{ color: textColor }}>{item.capacity} sat</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
-      />
+      {channels && channels.length > 0 && (
+        <>
+          <Text style={{ color: textColor }}>
+            Open Channels
+          </Text>
+          <FlatList
+            contentContainerStyle={{ paddingBottom: 20 }}
+            style={styles.container}
+            data={channels}
+            keyExtractor={item => item.channelPoint}
+            renderItem={({ item }) => renderChannelItem(item, 'open')}
+          />
+        </>
+      )}
+      {pendingChannels && pendingChannels.length > 0 && (
+        <>
+          <Text style={{ color: textColor }}>
+            Pending Channels
+          </Text>
+          <FlatList
+            contentContainerStyle={{ paddingBottom: 20 }}
+            style={styles.container}
+            data={pendingChannels}
+            keyExtractor={item => item.channelPoint}
+            renderItem={({ item }) => renderChannelItem(item, 'pending')}
+          />
+        </>
+      )}
+      {closedChannels && closedChannels.length > 0 && (
+        <>
+          <Text style={{ color: textColor }}>
+            Closed Channels
+          </Text>
+          <FlatList
+            contentContainerStyle={{ paddingBottom: 20 }}
+            style={styles.container}
+            data={closedChannels}
+            keyExtractor={item => item.channelPoint}
+            renderItem={({ item }) => renderChannelItem(item, 'closed')}
+          />
+        </>
+      )}
       {selectedItem && (
         <Modal
           animationType="slide"
@@ -135,13 +175,25 @@ const ChannelList = () => {
               {(() => {
                 return (
                   <View style={{ marginTop: 10 }}>
-                    {selectedItem.active ? (
-                      <Text>Active channel</Text>
-                    ) : (
-                      <Text>Inactive channel</Text>
+                    {!selectedItem.class && (
+                      selectedItem.active ? (
+                        <Text>Active channel</Text>
+                      ) : (
+                        <Text>Inactive channel</Text>
+                      )
                     )}
-                    <Text>Channel point: {selectedItem.channelPoint}</Text>
-                    <Text>Peer pubkey: {selectedItem.remotePubkey}</Text>
+                    {selectedItem.class && (
+                      <Text>{selectedItem.class}</Text>
+                    )}
+                    {selectedItem.class && selectedItem.class == "Pending Force Close" && (
+                      <Text>Maturity height: {selectedItem.maturityHeight}</Text>
+                    )}
+                    <TouchableOpacity onPress={() => copyToClipboard(selectedItem.channelPoint)}>
+                      <Text>Channel point: {selectedItem.channelPoint}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => copyToClipboard(selectedItem.remotePubkey)}>
+                      <Text>Peer pubkey: {selectedItem.remotePubkey}</Text>
+                    </TouchableOpacity>
                     {selectedItem.initiator ? (
                       <Text>Local initiator</Text>
                     ) : (
@@ -173,22 +225,26 @@ const ChannelList = () => {
                 onChangeText={text => setFeeRate(Number(text))}
                 value={feeRate.toString()}
               /> */}
-              <Text>Closing fee rate (sat/vB)</Text>
-              <TextInput
-                style={styles.input}
-                value={isNaN(feeRate) ? '' : feeRate.toString()}
-                onChangeText={text => setFeeRate(Number(text))}
-                keyboardType="numeric"
-              />
-              <TouchableOpacity
-                style={styles.buttonCloseChannel}
-                onPressIn={handleButtonPress}
-                onPressOut={handleButtonRelease}
-              >
-                <Text style={styles.textStyle}>
-                  {isForceClose ? 'Force Close Channel' : 'Close Channel'}
-                </Text>
-              </TouchableOpacity>
+              {!selectedItem.class && (
+                <>
+                  <Text>Closing fee rate (sat/vB)</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={isNaN(feeRate) ? '' : feeRate.toString()}
+                    onChangeText={text => setFeeRate(Number(text))}
+                    keyboardType="numeric"
+                  />
+                  <TouchableOpacity
+                    style={styles.buttonCloseChannel}
+                    onPressIn={handleButtonPress}
+                    onPressOut={handleButtonRelease}
+                  >
+                    <Text style={styles.textStyle}>
+                      {isForceClose ? 'Force Close Channel' : 'Close Channel'}
+                    </Text>
+                  </TouchableOpacity>
+                </>
+              )}
               <Toast />
             </View>
           </View>

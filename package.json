@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "android": "react-native run-android",
+    "android:mainnetDebug": "cd android && ./gradlew assembleGeneralBitcoinMainnetDebug && adb install -r app/build/outputs/apk/generalBitcoinMainnet/debug/app-general-bitcoinMainnet-debug.apk && adb shell am start -n com.liminal/com.liminal.MainActivity",
+    "android:mainnetRelease": "cd android && ./gradlew assembleGeneralBitcoinMainnetRelease && adb install -r app/build/outputs/apk/generalBitcoinMainnet/release/app-general-bitcoinMainnet-release.apk && adb shell am start -n com.liminal/com.liminal.MainActivity",
+    "android:testnetDebug": "cd android && ./gradlew assembleGeneralBitcoinTestnetDebug && adb install -r app/build/outputs/apk/generalBitcoinTestnet/debug/app-general-bitcoinTestnet-debug.apk && adb shell am start -n com.liminal.testnet/com.liminal.MainActivity",
+    "android:testnetRelease": "cd android && ./gradlew assembleGeneralBitcoinTestnetRelease && adb install -r app/build/outputs/apk/generalBitcoinTestnet/release/app-general-bitcoinTestnet-release.apk && adb shell am start -n com.liminal.testnet/com.liminal.MainActivity",
     "postinstall": "patch-package"
   },
   "dependencies": {
@@ -19,6 +22,7 @@
     "react": "18.2.0",
     "react-native": "0.72.5",
     "react-native-biometrics": "^3.0.1",
+    "react-native-build-config": "^0.3.2",
     "react-native-document-picker": "^9.0.1",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.13.1",
