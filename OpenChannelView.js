@@ -5,15 +5,20 @@ import {
   View,
   Text,
   TextInput,
+  TouchableOpacity,
   Switch,
   Button,
   StyleSheet,
   NativeModules,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { ThemeContext } from './ThemeContext';
 import { fetchFee } from './Utils';
 
 const OpenChannelView = () => {
+  const navigation = useNavigation();
   const [connectionURI, setConnectionURI] = useState('');
   const [announceChannel, setAnnounceChannel] = useState(false);
   const [localAmount, setLocalAmount] = useState('');
@@ -39,6 +44,24 @@ const OpenChannelView = () => {
   //   }
   // };
 
+  const scan = async () => {
+    try {
+      const result = await request(PERMISSIONS.ANDROID.CAMERA);
+      if (result === RESULTS.GRANTED) {
+        console.log('Camera permissions granted');
+        navigation.navigate('Scanner', { onQRCodeScanned });
+      } else {
+        console.log('Camera permissions denied');
+      }
+    } catch (error) {
+      console.log('Camera permissions request error:', error);
+    }
+  };
+
+  const onQRCodeScanned = code => {
+    setConnectionURI(code);
+  };
+
   const openChannel = async () => {
     console.log('connectpeer preopenchannel');
     setIsPaying(true);
@@ -47,7 +70,6 @@ const OpenChannelView = () => {
       await NativeModules.LndModule.connectPeer(connectionURI);
     } catch (error) {
       console.log('Failed to connectpeer', error);
-      setIsPaying(false);
     }
     console.log('openchannel');
     try {
@@ -69,25 +91,23 @@ const OpenChannelView = () => {
   };
 
   useEffect(() => {
-    const fetchAndSetFee = async () => {
-      const hourFee = await fetchFee();
-      setFeeRate(hourFee);
-    };
-
-    fetchAndSetFee();
-  })
-
-  useEffect(() => {
     const subscription = DeviceEventEmitter.addListener(
       'OpenChannelUpdate',
       update => {
-        console.log('Received OpenChannelUpdate: ', update);
+        console.log('Received OpenChannelUpdate: ', JSON.stringify(update));
         setOpenChannelResult('Open channel success');
         setPendingChannelId(update.pendingChanId);
         setOpenChannelTxId(update.fundingTxId);
         setIsPaying(false);
       }
     );
+
+    const fetchAndSetFee = async () => {
+      const hourFee = await fetchFee();
+      setFeeRate(hourFee);
+    };
+
+    fetchAndSetFee();
 
     return () => {
       console.log('Tearing down OpenChannelUpdate subscription');
@@ -106,6 +126,12 @@ const OpenChannelView = () => {
             value={connectionURI}
             onChangeText={setConnectionURI}
           />
+          <TouchableOpacity
+            style={{ position: 'absolute', right: 10, top: 3 }}
+            onPress={scan}
+          >
+            <Icon name="camera-outline" color={textColor} size={32} />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.settingItem}>
@@ -138,6 +164,7 @@ const OpenChannelView = () => {
             style={[styles.input, { color: textColor, borderColor: textColor }]}
             value={feeRate}
             onChangeText={setFeeRate}
+            placeholder={feeRate.toString()}
             placeholderTextColor={textColor}
             keyboardType="numeric"
           />
@@ -145,8 +172,8 @@ const OpenChannelView = () => {
 
         {openChannelResult && (
           <View>
+            {isPaying && <ActivityIndicator size="small" color="#00ff00"/>}
             <Text style={{ color: textColor }}>{openChannelResult}</Text>
-            {isPaying && <ActivityIndicator size="small" color="#00ff00" style={{ marginLeft: 8 }}/>}
           </View>
         )}
 

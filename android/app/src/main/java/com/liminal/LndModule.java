@@ -958,7 +958,9 @@ public class LndModule extends ReactContextBaseJavaModule {
                         for (LightningOuterClass.PendingChannelsResponse.ForceClosedChannel pendingForceClosedChannel : response.getPendingForceClosingChannelsList()) {
                             LightningOuterClass.PendingChannelsResponse.PendingChannel channel = pendingForceClosedChannel.getChannel();
                             WritableMap channelMap = Arguments.createMap();
+                            channelMap.putString("closeTx", pendingForceClosedChannel.getClosingTxid());
                             channelMap.putDouble("maturityHeight", pendingForceClosedChannel.getMaturityHeight());
+                            channelMap.putDouble("blocksTilMaturity", pendingForceClosedChannel.getBlocksTilMaturity());
                             channelMap.putBoolean("active", false);
                             channelMap.putString("class", "Pending Force Close");
                             channelMap.putBoolean("private", channel.getPrivate());
@@ -975,6 +977,7 @@ public class LndModule extends ReactContextBaseJavaModule {
                         for (LightningOuterClass.PendingChannelsResponse.WaitingCloseChannel waitingCloseChannel : response.getWaitingCloseChannelsList()) {
                             LightningOuterClass.PendingChannelsResponse.PendingChannel channel = waitingCloseChannel.getChannel();
                             WritableMap channelMap = Arguments.createMap();
+                            channelMap.putString("closeTx", waitingCloseChannel.getClosingTxid());
                             channelMap.putBoolean("active", false);
                             channelMap.putString("class", "Waiting Close");
                             channelMap.putBoolean("private", channel.getPrivate());
@@ -1129,6 +1132,7 @@ public class LndModule extends ReactContextBaseJavaModule {
                         txMap.putDouble("creationDate", tx.getTimeStamp());
                         txMap.putDouble("fees", tx.getTotalFees());
                         txMap.putString("label", tx.getLabel());
+                        txMap.putString("rawHex", tx.getRawTxHex());
                         transactionsArray.pushMap(txMap);
                         // TODO: output details
                     }
@@ -1471,7 +1475,9 @@ public class LndModule extends ReactContextBaseJavaModule {
     }
 
     private LightningOuterClass.GetTransactionsRequest serializeGetTransactions() {
-        return LightningOuterClass.GetTransactionsRequest.newBuilder().build();
+        LightningOuterClass.GetTransactionsRequest.Builder builder = LightningOuterClass.GetTransactionsRequest.newBuilder();
+        builder.setEndHeight(-1);
+        return builder.build();
     }
 
     private LightningOuterClass.ListInvoiceRequest serializeListInvoices() {

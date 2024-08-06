@@ -57,6 +57,7 @@ const TransactionsList = () => {
         NativeModules.LndModule.listInvoices(),
         NativeModules.LndModule.getTransactions(),
       ]);
+      // console.log(JSON.stringify(chainTxs));
       const paymentsArray = payments ? payments : [];
       const invoicesArray = invoices ? invoices : [];
       const chainTxArray = chainTxs ? chainTxs : [];
@@ -65,6 +66,7 @@ const TransactionsList = () => {
         ...invoicesArray,
         ...chainTxArray,
       ];
+      // console.log(JSON.stringify(chainTxArray));
       // Sort the transactions array by the createdTime field, descending order (newest to oldest)
       transactions.sort((a, b) => b.creationDate - a.creationDate);
       setTransactions(transactions);
@@ -233,11 +235,18 @@ const TransactionsList = () => {
                   <Text style={styles.paymentRequest}>{selectedItem.pr}</Text>
                 </TouchableOpacity>
               ) : (
-                <TouchableOpacity
-                  onPress={() => copyToClipboard(selectedItem.id)}
-                >
-                  <Text style={styles.paymentRequest}>{selectedItem.id}</Text>
-                </TouchableOpacity>
+                <>
+                  <TouchableOpacity
+                    onPress={() => copyToClipboard(selectedItem.id)}
+                  >
+                    <Text style={styles.paymentRequest}>{selectedItem.id}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => copyToClipboard(selectedItem.rawHex)}
+                  >
+                    <Text style={styles.paymentRequest}>Click to copy raw tx hex</Text>
+                  </TouchableOpacity>
+                </>
               )}
               <TouchableOpacity style={styles.buttonClose} onPress={closeModal}>
                 <Text style={styles.textStyle}>Close</Text>

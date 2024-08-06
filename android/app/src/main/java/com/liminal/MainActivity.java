@@ -81,13 +81,15 @@ public class MainActivity extends ReactActivity {
                 Path filePath = Paths.get(lndPath + "/data/chain/bitcoin/" + network + "/wallet.db");
                 boolean unlock = false;
                 if (Files.exists(filePath)) {
-                    gossipSync().thenAccept(response -> {
-                        Log.i("LND", "GossipSync: " + response);
-                        LndModule.gossipSync = false;
-                    }).exceptionally(e -> {
-                        e.printStackTrace();
-                        return null;
-                    });
+                    if (network == "mainnet") {
+                        gossipSync().thenAccept(response -> {
+                            Log.i("LND", "GossipSync: " + response);
+                            LndModule.gossipSync = false;
+                        }).exceptionally(e -> {
+                            e.printStackTrace();
+                            return null;
+                        });
+                    }
                     unlock = true;
                     File password = new File(lndPath, "password");
                     FileWriter pwWriter;
@@ -105,11 +107,12 @@ public class MainActivity extends ReactActivity {
                 FileWriter writer;
                 try {
                     String neutrinoServer = network == "mainnet" ? "btcd.lnolymp.us" : "testnet.lnolymp.us";
-                    String backupNeutrinoServer = network == "mainnet" ? "node.blixtwallet.com" : "faucet.lightning.community";
+                    String neutrinoServer2 = network == "mainnet" ? "node.blixtwallet.com" : "faucet.lightning.community";
                     String feeURL = network == "mainnet" ? "https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json" : "https://nodes.lightning.computer/fees/v1/btctestnet-fee-estimates.json";
                     writer = new FileWriter(config);
                     StringBuilder sb = new StringBuilder();
                     sb.append("[Application Options]\n")
+                            // .append("debuglevel=debug,PEER=info,NTFN=trace\n")
                             .append("norest=true\n")
                             .append("sync-freelist=true\n")
                             .append("accept-keysend=true\n")
@@ -128,7 +131,7 @@ public class MainActivity extends ReactActivity {
                             .append("bitcoin.defaultchanconfs=1\n\n")
                             .append("[neutrino]\n")
                             .append("neutrino.addpeer=" + neutrinoServer + "\n")
-                            .append("neutrino.addpeer=" + backupNeutrinoServer + "\n")
+                            .append("neutrino.addpeer=" + neutrinoServer2 + "\n")
                             .append("neutrino.persistfilters=true\n\n")
                             .append("[fee]\n")
                             .append("fee.url=" + feeURL + "\n\n")

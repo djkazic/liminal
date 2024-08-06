@@ -8,6 +8,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import UTXOList from './UTXOList';
 import useDataFetching from './hooks/DataFetching';
 import { ThemeContext } from './ThemeContext';
+import { formatNumber } from './Utils';
 
 const UTXOScreen = () => {
   // const navigation = useNavigation();
@@ -22,7 +23,7 @@ const UTXOScreen = () => {
     try {
       const onchainBalance = await NativeModules.LndModule.getOnchainBalance();
       setOnchainBalance(onchainBalance.confirmedBalance);
-      setPendingBalance(onchainBalance.pendingBalance);
+      setPendingBalance(onchainBalance.unconfirmedBalance);
     } catch (error) {
       console.log('Failed to get onchain wallet balance', error);
     }
@@ -41,9 +42,9 @@ const UTXOScreen = () => {
         <Text style={{ fontSize: 32, alignSelf: 'center', color: textColor }}>
           ⛓️ {onchainBalance} sats
         </Text>
-        {pendingBalance && pendingBalance != '0' && (
+        {pendingBalance != '0' && (
           <Text style={{ color: textColor, alignSelf: 'center' }}>
-            ⏳ ({formatNumber(pendingBalance)} pending)
+            ⏳ ({formatNumber(pendingBalance)} sats pending)
           </Text>
         )}
         <View style={styles.utxoListContainer}>
